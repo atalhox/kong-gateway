@@ -80,7 +80,7 @@ routes:
 ### Via Kong Manager
 
 Exemplo de configuração de rota:
-![Routes](/docs/assets/gifs/kong/capacities/routes.gif)
+![Routes](/kong-gateway/assets/gifs/kong/capacities/routes.gif)
 
 ### Fallback route
 
