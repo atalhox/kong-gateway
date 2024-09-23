@@ -80,13 +80,12 @@ routes:
 ### Via Kong Manager
 
 Exemplo de configuração de rota:
-![Routes](/docs/assets/gifs/kong/capacities/routes.gif)
-![Routes](../../assets/gifs/kong/capacities/routes.gif)
+![Routes](assets/gifs/kong/capacities/routes.gif)
 
 ### Fallback route
 
 Um bom caso de uso é a criação de um endpoint `/` responsável por lidar com o tráfego de endpoints inexistentes.
 
-Esta rota é chamada de catch-all e atua como um endpoint que serve a todas as rotas não definidas, podendo trazer uma mensagem de exceção adequada(para configurar uma mensagem personalizada, utilize o plugin `request termination`).
+Esta rota é chamada de fallback route e atua como um endpoint que serve a todas as rotas não definidas, podendo trazer uma mensagem de exceção adequada(para configurar uma mensagem personalizada, utilize o plugin `request termination`).
 
 Mais detalhes sobre a configuração de rotas, serviços e seus parâmetros podem ser vistas na [documentação oficial](https://docs.konghq.com/gateway/latest/get-started/services-and-routes/).
