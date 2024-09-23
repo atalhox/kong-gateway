@@ -77,6 +77,6 @@ services:
 ### Via Kong Manager
 
 Exemplo de configuração de service:
-![Grafana](/kong-gateway/assets/gifs/kong/integrations/grafana.gif)
+![Services](/kong-gateway/assets/gifs/kong/capacities/services.gif)
 
 Mais detalhes podem ser obtidos da [documentação oficial](https://docs.konghq.com/gateway/latest/key-concepts/services/).

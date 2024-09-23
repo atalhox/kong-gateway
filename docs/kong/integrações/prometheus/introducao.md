@@ -1,4 +1,4 @@
-# Visão geral
+# Introdução
 
 Prometheus é uma ferramenta de monitoramento e alerta de sistemas open-source, amplamente utilizado devido às suas capacidades avançadas de coleta de métricas e monitoramento em tempo real.
 

@@ -1,4 +1,4 @@
-# API Gateway
+# Introdução
 
 Esta documentação fornece uma visão abrangente sobre API Gateways e sua importância no ambiente corporativo. As ferramentas de API Gateway são equipadas com um robusto conjunto de funcionalidades, seja nativamente ou por meio de extensões, que facilitam a gestão de APIs em grande escala.
 

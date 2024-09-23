@@ -1,4 +1,4 @@
-# Grafana
+# Introdução
 
 O Grafana é uma ferramenta poderosa e popular para monitoramento e visualização de dados. Aqui estão algumas razões para utilizar o Grafana:
 

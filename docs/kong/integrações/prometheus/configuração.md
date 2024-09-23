@@ -1,4 +1,4 @@
-# Configuração do Prometheus no Kong
+# Configuração
 
 Para configurar o Prometheus para coletar métricas do Kong com SSL habilitado, você precisará garantir que o endpoint do Kong esteja configurado para suportar HTTPS e que o Prometheus possa se conectar a esse endpoint.
 
