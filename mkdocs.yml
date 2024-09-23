@@ -1,0 +1,6 @@
+site_name: API Gateways
+plugins:
+  - mermaid2
+
+theme:
+  name: material
