@@ -1,5 +1,4 @@
 etc
 opt
 site
-deck
-kubernetes
+tls*

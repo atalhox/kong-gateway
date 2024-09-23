@@ -1,0 +1,140 @@
+_format_version: "3.0"
+consumers:
+- acls:
+  - group: dev
+    tags:
+    - sample
+    - acl
+    - dev
+  - group: admin
+    tags:
+    - acl
+    - sample
+    - admin
+  basicauth_credentials:
+  - password: 2b3d50598fed68470a8c07c2431afaa42a39aacd
+    tags:
+    - sample
+    - basic auth
+    username: admin
+  custom_id: "1"
+  keyauth_credentials:
+  - key: bbDbvjM5xyccG2VUpRW02oPiEuyDdEYD
+    tags:
+    - sample
+    - key auth
+  tags:
+  - sample
+  username: sample-consumer-v1
+services:
+- connect_timeout: 60000
+  enabled: true
+  host: httpbin.org
+  name: sample-httpbin-v1
+  path: /
+  port: 443
+  protocol: https
+  read_timeout: 60000
+  retries: 5
+  tags:
+  - sample
+  write_timeout: 60000
+- connect_timeout: 60000
+  enabled: true
+  host: petstore.swagger.io
+  name: sample-petstore-v1
+  path: /v2
+  port: 443
+  protocol: https
+  read_timeout: 60000
+  retries: 5
+  routes:
+  - https_redirect_status_code: 426
+    name: sample-acl-v1
+    path_handling: v0
+    paths:
+    - /sample/v1/acl
+    plugins:
+    - config:
+        allow:
+        - admin
+        deny: null
+        hide_groups_header: true
+      enabled: true
+      instance_name: sample-acl-v1
+      name: acl
+      protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
+      tags:
+      - sample
+      - acl
+    - config:
+        anonymous: null
+        hide_credentials: false
+        realm: service
+      enabled: true
+      instance_name: sample-basic_auth-v1
+      name: basic-auth
+      protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
+      tags:
+      - basic auth
+      - sample
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+    tags:
+    - sample
+    - acl
+  - https_redirect_status_code: 426
+    name: sample-key_auth-v1
+    path_handling: v0
+    paths:
+    - /sample/v1/key-auth
+    plugins:
+    - config:
+        anonymous: null
+        hide_credentials: false
+        key_in_body: false
+        key_in_header: true
+        key_in_query: true
+        key_names:
+        - apikey
+        realm: null
+        run_on_preflight: true
+      enabled: true
+      instance_name: sample-key_auth-v1
+      name: key-auth
+      protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
+      tags:
+      - key auth
+      - sample
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+    tags:
+    - sample
+    - key authentication
+  tags:
+  - sample
+  write_timeout: 60000

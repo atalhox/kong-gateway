@@ -1,0 +1,466 @@
+_format_version: "3.0"
+consumers:
+- acls:
+  - group: dev
+    tags:
+    - sample
+    - acl
+    - dev
+  - group: admin
+    tags:
+    - acl
+    - sample
+    - admin
+  basicauth_credentials:
+  - password: ea0934064edfe299dd113a727fcc3bc8d9ea9050
+    tags:
+    - sample
+    - basic auth
+    username: admin
+  custom_id: "1"
+  keyauth_credentials:
+  - key: bbDbvjM5xyccG2VUpRW02oPiEuyDdEYD
+    tags:
+    - sample
+    - key auth
+  tags:
+  - sample
+  username: sample-consumer-v1
+routes:
+- https_redirect_status_code: 426
+  name: api-fallback_route-v1
+  path_handling: v0
+  paths:
+  - /
+  plugins:
+  - config:
+      body: '{"error": "not_found", "status": 404} '
+      content_type: application/json
+      echo: false
+      message: null
+      status_code: 404
+      trigger: null
+    enabled: true
+    instance_name: api-fallback_route-v1
+    name: request-termination
+    protocols:
+    - grpc
+    - grpcs
+    - http
+    - https
+    tags:
+    - api
+    - fallback route
+    - error handling
+  preserve_host: false
+  protocols:
+  - http
+  - https
+  regex_priority: 0
+  request_buffering: true
+  response_buffering: true
+  strip_path: true
+  tags:
+  - api
+  - fallback route
+  - error handling
+services:
+- connect_timeout: 60000
+  enabled: true
+  host: httpbin.org
+  name: sample-httpbin-v1
+  path: /
+  port: 443
+  protocol: https
+  read_timeout: 60000
+  retries: 5
+  routes:
+  - https_redirect_status_code: 426
+    name: sample-request_size-v1
+    path_handling: v0
+    paths:
+    - /sample/v1/request-size-limit
+    plugins:
+    - config:
+        allowed_payload_size: 10
+        require_content_length: false
+        size_unit: bytes
+      enabled: true
+      instance_name: sample-request_size_limit-v1
+      name: request-size-limiting
+      protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
+      tags:
+      - sample
+      - request size limit
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+    tags:
+    - sample
+    - request size limit
+  - https_redirect_status_code: 426
+    name: sample-request_transform-v1
+    path_handling: v0
+    paths:
+    - /sample/v1/request-transform
+    plugins:
+    - config:
+        add:
+          body:
+          - a_brand_new_attribute:i'm added by kong request transform plugin
+          headers:
+          - X-Custom-Header:I didn't exist before kong request transform plugin
+          querystring: []
+        append:
+          body: []
+          headers: []
+          querystring: []
+        http_method: null
+        remove:
+          body:
+          - a_future_removed_attribute
+          headers: []
+          querystring: []
+        rename:
+          body: []
+          headers: []
+          querystring: []
+        replace:
+          body:
+          - a_future_updated_attribute:10000.00
+          headers: []
+          querystring: []
+          uri: null
+      enabled: true
+      instance_name: sample-request_transform-v1
+      name: request-transformer
+      protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
+      tags:
+      - sample
+      - request transform
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+    tags:
+    - sample
+    - request transform
+    - httpbin
+  tags:
+  - sample
+  write_timeout: 60000
+- connect_timeout: 60000
+  enabled: true
+  host: petstore.swagger.io
+  name: sample-petstore-v1
+  path: /v2
+  port: 443
+  protocol: https
+  read_timeout: 60000
+  retries: 5
+  routes:
+  - https_redirect_status_code: 426
+    name: sample-acl-v1
+    path_handling: v0
+    paths:
+    - /sample/v1/acl
+    plugins:
+    - config:
+        allow:
+        - admin
+        deny: null
+        hide_groups_header: true
+      enabled: true
+      instance_name: sample-acl-v1
+      name: acl
+      protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
+      tags:
+      - sample
+      - acl
+    - config:
+        anonymous: null
+        hide_credentials: false
+        realm: service
+      enabled: true
+      instance_name: sample-basic_auth-v1
+      name: basic-auth
+      protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
+      tags:
+      - basic auth
+      - sample
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+    tags:
+    - sample
+    - acl
+  - https_redirect_status_code: 426
+    name: sample-caching-v1
+    path_handling: v0
+    paths:
+    - /sample/v1/caching
+    plugins:
+    - config:
+        cache_control: false
+        cache_ttl: 300
+        content_type:
+        - text/plain
+        - application/json
+        ignore_uri_case: false
+        memory:
+          dictionary_name: kong_db_cache
+        request_method:
+        - GET
+        - HEAD
+        response_code:
+        - 200
+        - 301
+        - 404
+        response_headers:
+          X-Cache-Key: true
+          X-Cache-Status: true
+          age: true
+        storage_ttl: null
+        strategy: memory
+        vary_headers: null
+        vary_query_params: null
+      enabled: true
+      instance_name: sample-caching-v1
+      name: proxy-cache
+      protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
+      tags:
+      - sample
+      - caching
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+    tags:
+    - sample
+    - caching
+  - https_redirect_status_code: 426
+    name: sample-cors-v1
+    path_handling: v0
+    paths:
+    - /sample/v1/cors
+    plugins:
+    - config:
+        credentials: true
+        exposed_headers:
+        - X-Auth-Token
+        headers:
+        - Accept
+        - Accept-Version
+        - Content-Length
+        - Content-MD5
+        - Content-Type
+        - Date
+        - X-Auth-Token
+        max_age: 3600
+        methods:
+        - GET
+        - POST
+        origins:
+        - '*'
+        preflight_continue: false
+        private_network: false
+      enabled: true
+      instance_name: sample-cors-v1
+      name: cors
+      protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
+      tags:
+      - sample
+      - cors
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+    tags:
+    - sample
+    - cors
+  - https_redirect_status_code: 426
+    name: sample-ip_restriction-v1
+    path_handling: v0
+    paths:
+    - /sample/v1/ip-restriction
+    plugins:
+    - config:
+        allow: null
+        deny:
+        - 111.11.111.11
+        message: '{"error": "Internal Server Error", "status": 500} '
+        status: 500
+      enabled: true
+      instance_name: sample-ip_restriction-v1
+      name: ip-restriction
+      protocols:
+      - http
+      - https
+      - tcp
+      - tls
+      - grpc
+      - grpcs
+      tags:
+      - sample
+      - ip restriction
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+    tags:
+    - sample
+    - ip restriction
+  - https_redirect_status_code: 426
+    name: sample-key_auth-v1
+    path_handling: v0
+    paths:
+    - /sample/v1/key-auth
+    plugins:
+    - config:
+        anonymous: null
+        hide_credentials: false
+        key_in_body: false
+        key_in_header: true
+        key_in_query: true
+        key_names:
+        - apikey
+        realm: null
+        run_on_preflight: true
+      enabled: true
+      instance_name: sample-key_auth-v1
+      name: key-auth
+      protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
+      tags:
+      - key auth
+      - sample
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+    tags:
+    - sample
+    - key authentication
+  - https_redirect_status_code: 426
+    name: sample-rate_limit-v1
+    path_handling: v0
+    paths:
+    - /sample/v1/rate-limit
+    plugins:
+    - config:
+        day: null
+        error_code: 429
+        error_message: API rate limit exceeded
+        fault_tolerant: true
+        header_name: null
+        hide_client_headers: false
+        hour: null
+        limit_by: consumer
+        minute: 3
+        month: null
+        path: null
+        policy: local
+        redis:
+          database: 0
+          host: null
+          password: null
+          port: 6379
+          server_name: null
+          ssl: false
+          ssl_verify: false
+          timeout: 2000
+          username: null
+        redis_database: 0
+        redis_host: null
+        redis_password: null
+        redis_port: 6379
+        redis_server_name: null
+        redis_ssl: false
+        redis_ssl_verify: false
+        redis_timeout: 2000
+        redis_username: null
+        second: null
+        sync_rate: -1
+        year: null
+      enabled: true
+      instance_name: sample-rate_limit-v1
+      name: rate-limiting
+      protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
+      tags:
+      - rate limit
+      - sample
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+    tags:
+    - rate limit
+    - sample
+  tags:
+  - sample
+  write_timeout: 60000
