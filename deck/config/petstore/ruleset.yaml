@@ -1,0 +1,69 @@
+extends: [spectral:oas, spectral:recommended]
+
+rules:
+  # Regras de boas práticas gerais
+  operation-operationId-unique:
+    description: "O campo operationId deve ser único para cada operação."
+    severity: error
+    given: "$.paths[*][*].operationId"
+    then:
+      function: unique
+
+  operation-parameters-unique:
+    description: "Os parâmetros dentro de uma operação devem ter nomes únicos."
+    severity: error
+    given: "$.paths[*][*].parameters"
+    then:
+      function: oasOpParams
+
+  # Regras para descrever corretamente as tags
+  operation-tags-defined:
+    description: "Todas as tags devem ser definidas globalmente no documento OpenAPI."
+    severity: error
+    given: "$.paths[*][*].tags[*]"
+    then:
+      field: "$.tags"
+      function: contains
+
+  # Regras de documentação
+  info-contact:
+    description: "A API deve ter um contato definido no campo info."
+    severity: warn
+    given: "$.info"
+    then:
+      field: "contact"
+      function: truthy
+
+  info-description:
+    description: "A API deve ter uma descrição no campo info."
+    severity: error
+    given: "$.info"
+    then:
+      field: "description"
+      function: truthy
+
+  # Regras sobre os caminhos da API
+  no-trailing-slash:
+    description: "Os caminhos da API não devem terminar com barra (/)."
+    severity: warn
+    given: "$.paths"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^((?!/).)*$"
+
+  # Regras para garantir respostas corretas
+  operation-2xx-response:
+    description: "Todas as operações devem ter pelo menos uma resposta 2xx."
+    severity: error
+    given: "$.paths[*][*].responses"
+    then:
+      function: oasOpSuccessResponse
+
+  # Garantir que todas as operações usem a convenção de HTTP correta
+  path-uses-http-verbs:
+    description: "Os caminhos devem usar verbos HTTP válidos."
+    severity: error
+    given: "$.paths[*]"
+    then:
+      function: oasPathValidVerbs

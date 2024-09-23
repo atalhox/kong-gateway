@@ -1,0 +1,121 @@
+description: Custom API Best Practices Ruleset
+documentationUrl: https://minha-api.com/regras
+rules:
+  # Regra para validar o uso de HTTPS
+  enforce-https:
+    category:
+      description: "Segurança de API para garantir a comunicação segura."
+      id: Security
+      name: Segurança
+    description: "Todas as APIs devem ser acessadas via HTTPS para garantir a segurança da comunicação."
+    formats:
+      - oas3
+      - oas3_1
+    given: $.services[*].protocol
+    howToFix: "Use o protocolo HTTPS para todas as APIs."
+    id: enforce-https
+    recommended: true
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https$"
+
+  tags-required-rule:
+    description: Field tags must have a value.
+    given: services
+    severity: error
+    then:
+      field: tags
+      function: truthy
+
+  version-check:
+    description: "validate version 3.1 for decK files"
+    given: $._format_version
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: "^3.0$"
+    # type: validation
+
+  # # Regra para garantir uso de versionamento de API
+  # enforce-api-versioning:
+  #   category:
+  #     description: "Melhores práticas de versionamento de API."
+  #     id: Design
+  #     name: Versionamento
+  #   description: "A API deve seguir o versionamento explícito nos endpoints."
+  #   formats:
+  #     - oas3
+  #     - oas3_1
+  #   given: $.paths[*]~
+  #   howToFix: "Adicione o versionamento explícito aos endpoints, por exemplo, /v1/recurso."
+  #   id: enforce-api-versioning
+  #   recommended: true
+  #   severity: error
+  #   then:
+  #     field: path
+  #     function: pattern
+  #     functionOptions:
+  #       match: "^/v[0-9]+/"
+  #   type: validation
+
+  # # Regra para limitar a profundidade de aninhamento de objetos JSON
+  # enforce-json-nesting-limit:
+  #   category:
+  #     description: "Limitação de aninhamento para evitar objetos JSON muito profundos."
+  #     id: Design
+  #     name: JSON Structure
+  #   description: "Limite a profundidade do aninhamento de objetos JSON a 3 níveis."
+  #   formats:
+  #     - oas3
+  #     - oas3_1
+  #   given: $.components.schemas[*]
+  #   howToFix: "Reduza a profundidade do aninhamento de objetos JSON."
+  #   id: enforce-json-nesting-limit
+  #   recommended: true
+  #   severity: warn
+  #   then:
+  #     function: maxNesting
+  #     functionOptions:
+  #       maxDepth: 3
+  #   type: validation
+
+  # # Regra para validar o uso de rate limiting
+  # enforce-rate-limiting:
+  #   category:
+  #     description: "Implementação de rate limiting para proteger a API contra abuso."
+  #     id: Security
+  #     name: Rate Limiting
+  #   description: "Todas as APIs devem implementar rate limiting para evitar abuso e sobrecarga do sistema."
+  #   formats:
+  #     - oas3
+  #     - oas3_1
+  #   given: $.paths[*].get.responses[*]
+  #   howToFix: "Implemente políticas de rate limiting no seu API Gateway ou backend."
+  #   id: enforce-rate-limiting
+  #   recommended: true
+  #   severity: error
+  #   then:
+  #     function: validateRateLimiting
+  #   type: validation
+
+  # # Regra para uso correto de status codes
+  # enforce-status-codes:
+  #   category:
+  #     description: "Boas práticas de retorno de status codes apropriados."
+  #     id: Design
+  #     name: HTTP Status Codes
+  #   description: "Use status codes apropriados para todas as respostas."
+  #   formats:
+  #     - oas3
+  #     - oas3_1
+  #   given: $.paths[*].responses
+  #   howToFix: "Use os status codes corretos (200, 201, 400, 404, 500, etc.) conforme a situação."
+  #   id: enforce-status-codes
+  #   recommended: true
+  #   severity: warn
+  #   then:
+  #     function: validateStatusCodes
+  #   type: validation
