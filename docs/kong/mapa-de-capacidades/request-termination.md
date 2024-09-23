@@ -59,9 +59,7 @@ deck gateway sync <deck-config.yaml>
 
 Exemplo de configuração do plugin `Request Termination` para uma rota previamente criada:
 
-<div style="text-align: center;">
-  <img src="/assets/gifs/kong/capacities/request-termination.gif" alt="cors" width="700"/>
-</div>
+![Request termination](/kong-gateway/assets/gifs/kong/capacities/request-termination.gif)
 
 ### Forward Proxy plugin
 

@@ -73,8 +73,6 @@ deck gateway sync <deck-config.yaml>
 
 ### Via Kong Manager
 
-<div style="text-align: center;">
-  <img src="/assets/gifs/kong/capacities/rate-limit.gif" alt="rate-limit" width="700"/>
-</div>
+![Rate Limit](/kong-gateway/assets/gifs/kong/capacities/rate-limit.gif)
 
 Mais detalhes podem ser obtidos da [documentação oficial Kong](https://docs.konghq.com/hub/kong-inc/rate-limit/).

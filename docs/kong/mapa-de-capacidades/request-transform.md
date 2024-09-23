@@ -147,8 +147,6 @@ deck gateway sync <deck-config.yaml>
 
 ### Via Kong Manager
 
-<div style="text-align: center;">
-  <img src="/assets/gifs/kong/capacities/request-transform.gif" alt="request-transform" width="800"/>
-</div>
+![Request transform](/kong-gateway/assets/gifs/kong/capacities/request-transform.gif)
 
 Mais detalhes na [documentação oficial](https://docs.konghq.com/hub/kong-inc/request-transformer).

@@ -128,8 +128,6 @@ deck gateway sync <deck-config.yaml>
 
 Exemplo de configuração do plugin Key-auth para uma rota previamente criada:
 
-<div style="text-align: center;">
-  <img src="/assets/gifs/kong/capacities/key-auth.gif" alt="key-auth" width="700"/>
-</div>
+![Key Auth](/kong-gateway/assets/gifs/kong/capacities/key-auth.gif)
 
 Mais detalhes na [documentação oficial](https://docs.konghq.com/hub/kong-inc/key-auth).

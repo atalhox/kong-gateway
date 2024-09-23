@@ -150,9 +150,7 @@ deck gateway sync <deck-config.yaml>
 
 Exemplo de configuração do plugin ACL para uma rota previamente criada e autenticação por Key Auth:
 
-<div style="text-align: center;">
-  <img src="/assets/gifs/kong/capacities/acl.gif" alt="acl" width="800"/>
-</div>
+![ACL](/kong-gateway/assets/gifs/kong/capacities/acl.gif)
 
 Observação: este exemplo apresenta o cenário de captura do ACL. Para realizar a configuração correta, basta adicionar ao plugin o grupo criado para o consumer.
 

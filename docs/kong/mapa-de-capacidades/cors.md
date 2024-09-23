@@ -81,9 +81,7 @@ deck gateway sync <deck-config.yaml>
 
 Exemplo de configuração do plugin CORS para uma rota previamente criada:
 
-<div style="text-align: center;">
-  <img src="/assets/gifs/kong/capacities/cors.gif" alt="cors" width="700"/>
-</div>
+![CORS](/kong-gateway/assets/gifs/kong/capacities/cors.gif)
 
 ## Verificando a configuração do CORS
 

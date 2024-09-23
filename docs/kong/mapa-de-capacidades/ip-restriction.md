@@ -67,8 +67,6 @@ deck gateway sync <deck-config.yaml>
 
 ### Via Kong Manager
 
-<div style="text-align: center;">
-  <img src="/assets/gifs/kong/capacities/ip-restriction.gif" alt="cors" width="700"/>
-</div>
+![IP Restriction](/kong-gateway/assets/gifs/kong/capacities/ip-restriction.gif)
 
 Mais detalhes podem ser obtidos da [documentação oficial Kong](https://docs.konghq.com/hub/kong-inc/ip-restriction/).

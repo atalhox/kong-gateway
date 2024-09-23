@@ -110,8 +110,6 @@ deck gateway sync <deck-config.yaml>
 
 Exemplo de configuração do plugin Proxy Cache para uma rota previamente criada:
 
-<div style="text-align: center;">
-  <img src="/assets/gifs/kong/capacities/cache.gif" alt="cors" width="700"/>
-</div>
+![Caching](/kong-gateway/assets/gifs/kong/capacities/cache.gif)
 
 Mais detalhes na [documentação oficial](https://docs.konghq.com/hub/kong-inc/proxy-cache).

@@ -64,8 +64,6 @@ deck gateway sync <deck-config.yaml>
 
 ### Via Kong Manager
 
-<div style="text-align: center;">
-  <img src="/assets/gifs/kong/capacities/request-size-limiting.gif" alt="request-size-limiting" width="700"/>
-</div>
+![Request size limit](/kong-gateway/assets/gifs/kong/capacities/request-size-limiting.gif)
 
 Mais detalhes podem ser obtidos da [documentação oficial Kong](https://docs.konghq.com/hub/kong-inc/request-size-limiting/).
