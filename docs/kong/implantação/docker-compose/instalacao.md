@@ -1,4 +1,4 @@
-# Docker compose install
+# Instalação
 
 ## Visão Geral
 
@@ -97,3 +97,80 @@ KONG_DOCKER_TAG=kong:3.7.1
 ```
 
 Essas configurações direcionam o Kong para se conectar ao banco de dados PostgreSQL externo.
+
+## Componentes
+
+### Proxy
+
+O Proxy é a funcionalidade principal do Kong, responsável por encaminhar solicitações entre clientes e seus serviços, aplicando políticas configuradas através de rotas e serviços.
+
+- **Encaminhamento de Solicitações**: O Kong recebe as solicitações dos clientes e as direciona para os serviços apropriados, baseando-se em regras de roteamento.
+
+- **Aplicação de Plugins**: Realiza transformações, autenticações, monitoramento e outras funcionalidades conforme as rotas e serviços configurados.
+
+- **Suporte a SSL/TLS**: O proxy pode ser configurado para suportar conexões seguras via SSL.
+
+Portas Padrão
+
+- **Porta HTTP**: 8000
+- **Porta HTTPS**: 8443
+
+Exemplo de Roteamento
+Uma solicitação pode ser roteada da seguinte forma:
+
+1. Cliente realiza um GET para <http://localhost:8000/request>
+2. O Kong redireciona a solicitação para o serviço configurado em <http://example.com/request>
+
+### Admin API
+
+A Admin API do Kong permite a configuração e o gerenciamento de todas as entidades dentro do Kong Gateway.
+
+Ela é o ponto central para interagir diretamente com o Kong para criar, listar, atualizar e deletar recursos, como APIs, serviços, rotas e consumidores.
+
+Endereço Padrão
+
+- **Porta HTTP**: 8001
+- **Porta HTTPS**: 8444
+
+#### Comandos Comuns
+
+Listar serviços:
+
+```bash
+curl -i <http://localhost:8001/services>
+```
+
+Criar um novo serviço:
+
+```curl -i -X POST <http://localhost:8001/services> \
+  --data name=my-service \
+  --data url='<http://example.com>'
+```
+
+Atualizar um serviço existente:
+
+```bash
+curl -i -X PATCH <http://localhost:8001/services/my-service> \
+  --data url='<http://example.org>'
+```
+
+Deletar um serviço:
+
+```bash
+curl -i -X DELETE <http://localhost:8001/services/my-service>
+```
+
+### Kong Manager
+
+O Kong Manager é a interface gráfica para gerenciar e monitorar o Kong Gateway.
+
+Ele proporciona uma experiência mais acessível para a administração do Kong sem a necessidade de interações com a linha de comando.
+
+- **Interface Visual**: Interface fácil de usar para gerenciar serviços, rotas, plugins e consumidores.
+
+- **Gestão de Plugins**: Facilita a instalação e a configuração de plugins.
+
+Endereço Padrão:
+
+- **Porta HTTP**: 8002
+- **Porta HTTPS**: 8445
