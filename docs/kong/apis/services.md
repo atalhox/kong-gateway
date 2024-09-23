@@ -77,9 +77,6 @@ services:
 ### Via Kong Manager
 
 Exemplo de configuração de service:
-
-<div style="text-align: center;">
-  <img src="/assets/gifs/kong/capacities/services.gif" alt="cors" width="700"/>
-</div>
+![Grafana](/docs/assets/gifs/kong/capacities/services.gif)
 
 Mais detalhes podem ser obtidos da [documentação oficial](https://docs.konghq.com/gateway/latest/key-concepts/services/).

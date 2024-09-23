@@ -80,14 +80,7 @@ routes:
 ### Via Kong Manager
 
 Exemplo de configuração de rota:
-
-<div style="text-align: center;">
-  <img src="/assets/gifs/kong/capacities/routes.gif" alt="cors" width="700"/>
-</div>
-
-### Via decK
-
-TO-DO
+![Grafana](/docs/assets/gifs/kong/capacities/routes.gif)
 
 ### Fallback route
 
