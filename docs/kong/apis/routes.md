@@ -81,6 +81,7 @@ routes:
 
 Exemplo de configuração de rota:
 ![Routes](/docs/assets/gifs/kong/capacities/routes.gif)
+![Routes](../../assets/gifs/kong/capacities/routes.gif)
 
 ### Fallback route
 

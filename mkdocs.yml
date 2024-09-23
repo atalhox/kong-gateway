@@ -3,5 +3,8 @@ site_url: https://atalhox.github.io/kong-gateway
 plugins:
   - mermaid2
 
+markdown_extensions:
+  - attr_list
+  - md_in_html
 theme:
   name: material
