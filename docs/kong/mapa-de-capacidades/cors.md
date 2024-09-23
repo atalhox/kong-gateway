@@ -91,10 +91,10 @@ Acesse por origens permitidas e não permitidas em sua configuração.
 
 Sucesso:
 
-![Requisição bem sucedida](/assets/img/gateway/kong/capacities/cors/success.png)
+![Requisição bem sucedida](/kong-gateway/assets/img/gateway/kong/capacities/cors/success.png)
 
 Erro de CORS:
 
-![Requisição mal sucedida](/assets/img/gateway/kong/capacities/cors/error.png)
+![Requisição mal sucedida](/kong-gateway/assets/img/gateway/kong/capacities/cors/error.png)
 
 Mais detalhes na [documentação oficial](https://docs.konghq.com/hub/kong-inc/cors).

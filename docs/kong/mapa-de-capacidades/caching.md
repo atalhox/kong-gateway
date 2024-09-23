@@ -66,16 +66,10 @@ curl --location 'http://admin-url:8001/routes/{route-id}/plugins' \
 Observe os tempos de latência com e sem cache.
 
 Sem cache
-
-<div style="text-align: center;">
-  <img src="/assets/img/gateway/kong/capacities/cache/caching-no-cache.png" alt="cors" width="700"/>
-</div>
+![No cache](/kong-gateway/assets/img/gateway/kong/capacities/cache/caching-no-cache.png)
 
 Com cache
-
-<div style="text-align: center;">
-  <img src="/assets/img/gateway/kong/capacities/cache/caching-with-cache.png" alt="cors" width="700"/>
-</div>
+![With cache](/kong-gateway/assets/img/gateway/kong/capacities/cache/caching-with-cache.png)
 
 ### Via decK
 
