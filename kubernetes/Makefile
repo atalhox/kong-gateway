@@ -16,6 +16,10 @@ install:
 
 full-install: setup secrets certificates install
 
+upgrade: 
+	helm upgrade kong-cp kong/kong -n kong --values ./values-cp.yaml
+	helm upgrade kong-dp kong/kong -n kong --values ./values-dp.yaml
+
 clean: 
 	kubectl delete namespace kong
 

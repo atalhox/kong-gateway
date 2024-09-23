@@ -32,7 +32,6 @@ env:
 # Enterprise functionality
 enterprise:
   enabled: false
-  # license_secret: kong-enterprise-license
 
 # The control plane serves the Admin API
 admin:

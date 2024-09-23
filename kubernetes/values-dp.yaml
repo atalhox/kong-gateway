@@ -27,7 +27,6 @@ env:
 # Enterprise functionality
 enterprise:
   enabled: false
-  # license_secret: kong-enterprise-license
 
 # The data plane handles proxy traffic only
 proxy:
