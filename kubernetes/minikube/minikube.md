@@ -157,3 +157,9 @@ O resultado esperado é similar a:
   "url": "http://127.0.0.1/anything"
 }
 ```
+
+### Verifique os logs
+
+```bash
+kubectl logs -l app.kubernetes.io/name=kong -n kong
+```

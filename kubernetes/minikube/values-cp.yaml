@@ -20,6 +20,12 @@ env:
   cluster_cert: /etc/secrets/kong-cluster-cert/tls.crt
   cluster_cert_key: /etc/secrets/kong-cluster-cert/tls.key
 
+  admin_gui_url: http://manager.kong.local:31032 # NodePort do Service
+  admin_gui_api_url: http://admin.kong.local:31963 # NodePort do Service
+
+  # Change the secret and set cookie_secure to true if using a HTTPS endpoint
+  # admin_gui_session_conf: '{"secret":"secret","storage":"kong","cookie_secure":false}'
+
   # Database
   # CHANGE THESE VALUES
   database: postgres
@@ -32,18 +38,12 @@ env:
   # Kong Manager password
   password: kong_admin_password
 
-  admin_gui_url: http://manager.kong.local
-  admin_gui_api_url: http://admin.kong.local
-  # Change the secret and set cookie_secure to true if using a HTTPS endpoint
-  admin_gui_session_conf: '{"secret":"secret","storage":"kong","cookie_secure":false}'
-
 # Enterprise functionality
 enterprise:
   enabled: false
-  # license_secret: kong-enterprise-license
   # rbac:
   #   enabled: true
-  #   admin_gui_auth: basic-auth
+  # admin_gui_auth: basic-auth
 
 # The control plane serves the Admin API
 admin:
@@ -57,7 +57,7 @@ admin:
     hostname: admin.kong.local
     path: /
     pathType: Prefix
-    ingressClassName: kong #Altere para nginx ou traefik
+    ingressClassName: kong
 
 # Clustering endpoints are required in hybrid mode
 cluster:
