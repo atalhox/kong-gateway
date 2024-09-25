@@ -30,7 +30,7 @@ Graças ao caching, a maioria das solicitações foram servidas diretamente do c
 
 Isso permitiu uma experiência de usuário suave e responsiva, aumentando as conversões e as vendas. Além disso, a infraestrutura da empresa não precisou de expansões emergenciais e ajustes em timeout, economizando custos.
 
-## Como configurar o Caching do Kong via API
+## Como configurar o Caching do Kong
 
 Para configurar o caching no Kong via API, siga os passos abaixo:
 

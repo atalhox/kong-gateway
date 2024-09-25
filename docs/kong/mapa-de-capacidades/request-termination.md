@@ -22,7 +22,7 @@ O plugin pode ser usado para terminar requisições específicas e retornar resp
 
 ## Como configurar o plugin
 
-### Via API admnistrativa
+### Via API administrativa
 
 Considere a configuração de uma rota chamada `request-termination`. A configuração do plugin pode ser feita como a abaixo.
 
@@ -88,7 +88,7 @@ Exemplo de configuração do plugin `Request Termination` para uma rota previame
 
 ![Request termination](/kong-gateway/assets/gifs/kong/capacities/request-termination.gif)
 
-### Forward Proxy plugin
+## Forward Proxy plugin
 
 O plugin `Request Termination` não será executado se o plugin `Forward Proxy` estiver habilitado.
 

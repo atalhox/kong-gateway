@@ -18,9 +18,11 @@ Consideremos uma aplicação crítica armazena registros em escala. Com a limita
 
 Isso garante que os serviços críticos continuem funcionando sem problemas e que os dados sensíveis permaneçam protegidos. Além disso, a aplicação pode otimizar o uso de recursos, garantindo que a capacidade do servidor seja utilizada eficientemente, de acordo com o planejado.
 
-## Como configurar a Limitação do Tamanho da Requisição via API?
+## Como configurar a Limitação do Tamanho da Requisição?
 
-Para configurar a limitação do tamanho da requisição no Kong via API, siga os passos abaixo:
+### Via API administrativa
+
+Para configurar a limitação do tamanho da requisição no Kong via API, siga os passos abaixo
 
 Considere a configuração abaixo para limitar o tamanho das requisições de uma rota `request-size-limiting`:
 
@@ -41,7 +43,7 @@ Neste caso, 128KB. Quando ultrapassado o limite, você deve esperar um retorno c
 }
 ```
 
-## Via decK
+### Via decK
 
 Adicione as seguintes configurações em sua config decK.
 

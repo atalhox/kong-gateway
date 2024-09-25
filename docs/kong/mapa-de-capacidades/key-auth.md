@@ -18,7 +18,7 @@ Após a configuração do Key Auth, apenas os clientes com chaves de acesso vál
 
 ## Como aplicar
 
-### Como configurar via API
+### Via API administrativa
 
 #### Adicionar o Plugin key-auth a uma Rota
 
