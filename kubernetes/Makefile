@@ -2,7 +2,7 @@ setup:
 	helm repo add kong https://charts.konghq.com
 	helm repo update
 
-secrets:
+namespace:
 	kubectl create namespace kong
 
 certificates:
@@ -14,7 +14,7 @@ install:
 	helm install kong-cp kong/kong -n kong --values ./values-cp.yaml
 	helm install kong-dp kong/kong -n kong --values ./values-dp.yaml
 
-full-install: setup secrets certificates install
+full-install: setup namespace certificates install
 
 upgrade: 
 	helm upgrade kong-cp kong/kong -n kong --values ./values-cp.yaml
@@ -23,5 +23,5 @@ upgrade:
 clean: 
 	kubectl delete namespace kong
 
-test:
-	kubectl get pods -n kong
+watch:
+	watch kubectl get pods -n kong
