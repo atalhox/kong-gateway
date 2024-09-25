@@ -1,0 +1,1746 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://atalhox.github.io/kong-gateway/kong/implanta%C3%A7%C3%A3o/docker-compose/instalacao/">
+      
+      
+        <link rel="prev" href="../../deck/instalacao/">
+      
+      
+        <link rel="next" href="../../../integra%C3%A7%C3%B5es/grafana/configura%C3%A7%C3%A3o/">
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.37">
+    
+    
+      
+        <title>Instalação - API Gateways</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.8c3ca2c6.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#instalacao" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="API Gateways" class="md-header__button md-logo" aria-label="API Gateways" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            API Gateways
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Instalação
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="API Gateways" class="md-nav__button md-logo" aria-label="API Gateways" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    API Gateways
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introdução
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Kong
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Kong
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../glossario/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossário
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Apis
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Apis
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../apis/routes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Routes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../apis/services/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../apis/ssl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SSL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Implantação
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Implantação
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_1" id="__nav_2_3_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Deck
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            Deck
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deck/boas-praticas/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Boas práticas
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deck/comandos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comandos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deck/instalacao/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Instalação
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_2" id="__nav_2_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Docker compose
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Docker compose
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Instalação
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Instalação
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#visao-geral" class="md-nav__link">
+    <span class="md-ellipsis">
+      Visão Geral
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pre-requisitos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pré-requisitos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pré-requisitos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#instalacao-do-docker-e-docker-compose" class="md-nav__link">
+    <span class="md-ellipsis">
+      Instalação do Docker e Docker Compose
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#passo-a-passo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Passo a Passo
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Passo a Passo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#criar-um-arquivo-docker-composeyml" class="md-nav__link">
+    <span class="md-ellipsis">
+      Criar um arquivo docker-compose.yml
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subir-os-containers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subir os containers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificar-se-o-kong-esta-rodando" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verificar se o Kong está rodando
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testar-o-proxy-do-kong" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testar o Proxy do Kong
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#passos-adicionais" class="md-nav__link">
+    <span class="md-ellipsis">
+      Passos Adicionais
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Passos Adicionais">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuracao-de-plugins-e-servicos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuração de Plugins e Serviços
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parar-e-remover-os-containers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parar e Remover os Containers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuracao-postgres-externo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuração Postgres externo
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#componentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Componentes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Componentes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proxy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#admin-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Admin API
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Admin API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comandos-comuns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comandos Comuns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kong-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kong Manager
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Integrações
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Integrações
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4_1" id="__nav_2_4_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Grafana
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            Grafana
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../integra%C3%A7%C3%B5es/grafana/configura%C3%A7%C3%A3o/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuração
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../integra%C3%A7%C3%B5es/grafana/introducao/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introdução
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4_2" id="__nav_2_4_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Prometheus
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Prometheus
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../integra%C3%A7%C3%B5es/prometheus/configura%C3%A7%C3%A3o/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuração
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../integra%C3%A7%C3%B5es/prometheus/introducao/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introdução
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Introdução
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            Introdução
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../introdu%C3%A7%C3%A3o/kong-gateway/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kong Gateway
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../introdu%C3%A7%C3%A3o/kong-konnect/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kong Konnect
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Mapa de capacidades
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            Mapa de capacidades
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mapa-de-capacidades/acl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ACL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mapa-de-capacidades/caching/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Caching
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mapa-de-capacidades/cors/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CORS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mapa-de-capacidades/ip-restriction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IP Restriction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mapa-de-capacidades/key-auth/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Key Auth
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mapa-de-capacidades/rate-limit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Rate Limit
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mapa-de-capacidades/request-size-limit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Request size limit
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mapa-de-capacidades/request-termination/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Request termination
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mapa-de-capacidades/request-transform/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Request transform
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mapa-de-capacidades/response-transform/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Response Transform
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#visao-geral" class="md-nav__link">
+    <span class="md-ellipsis">
+      Visão Geral
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pre-requisitos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pré-requisitos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pré-requisitos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#instalacao-do-docker-e-docker-compose" class="md-nav__link">
+    <span class="md-ellipsis">
+      Instalação do Docker e Docker Compose
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#passo-a-passo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Passo a Passo
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Passo a Passo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#criar-um-arquivo-docker-composeyml" class="md-nav__link">
+    <span class="md-ellipsis">
+      Criar um arquivo docker-compose.yml
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subir-os-containers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subir os containers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificar-se-o-kong-esta-rodando" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verificar se o Kong está rodando
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testar-o-proxy-do-kong" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testar o Proxy do Kong
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#passos-adicionais" class="md-nav__link">
+    <span class="md-ellipsis">
+      Passos Adicionais
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Passos Adicionais">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuracao-de-plugins-e-servicos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuração de Plugins e Serviços
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parar-e-remover-os-containers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parar e Remover os Containers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuracao-postgres-externo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuração Postgres externo
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#componentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Componentes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Componentes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proxy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#admin-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Admin API
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Admin API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comandos-comuns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comandos Comuns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kong-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kong Manager
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="instalacao">Instalação</h1>
+<h2 id="visao-geral">Visão Geral</h2>
+<p>Este guia fornece instruções para instalar o Kong Gateway usando o Docker Compose. O Kong é uma plataforma extensível para gerenciamento de APIs que permite controle, segurança e observabilidade de serviços e microserviços.</p>
+<h2 id="pre-requisitos">Pré-requisitos</h2>
+<p>Antes de começar, certifique-se de que você tenha os seguintes componentes instalados em seu ambiente:</p>
+<ul>
+<li><strong>Docker</strong> (v19.03 ou superior)</li>
+<li><strong>Docker Compose</strong> (v1.27.0 ou superior)</li>
+</ul>
+<h3 id="instalacao-do-docker-e-docker-compose">Instalação do Docker e Docker Compose</h3>
+<p>Caso você não tenha o Docker instalado, siga as instruções oficiais para instalá-lo:</p>
+<ul>
+<li>Docker: <a href="https://docs.docker.com/get-docker/">Instruções de instalação</a></li>
+<li>Docker Compose: <a href="https://docs.docker.com/compose/install/">Instruções de instalação</a></li>
+</ul>
+<h2 id="passo-a-passo">Passo a Passo</h2>
+<h3 id="criar-um-arquivo-docker-composeyml">Criar um arquivo <code>docker-compose.yml</code></h3>
+<p>Crie um diretório para o projeto e dentro dele um arquivo chamado <code>docker-compose.yml</code>.O arquivo de referência do kong oficial pode ser encontrado <a href="https://github.com/Kong/docker-kong">neste repositório</a>.</p>
+<p>Observe que o comando <code>docker-compose up -d</code> irá subir uma versão mais limitada do kong, sem o banco de dados.</p>
+<h3 id="subir-os-containers">Subir os containers</h3>
+<p>No mesmo diretório onde você criou o arquivo docker-compose.yml, execute o seguinte comando para subir os serviços:</p>
+<pre><code class="language-bash">make kong-postgres
+</code></pre>
+<p>Este comando irá:</p>
+<ul>
+<li>Subir o banco de dados PostgreSQL.</li>
+<li>Executar as migrações do banco de dados necessárias para o Kong.</li>
+<li>Iniciar o Kong Gateway.</li>
+</ul>
+<h3 id="verificar-se-o-kong-esta-rodando">Verificar se o Kong está rodando</h3>
+<p>Após a execução dos containers, você pode verificar se o Kong está funcionando corretamente acessando o endpoint administrativo:</p>
+<pre><code class="language-bash">curl -i &lt;http://localhost:8001&gt;
+</code></pre>
+<p>Se o Kong estiver funcionando corretamente, você deverá ver uma resposta com o status 200 OK.</p>
+<h3 id="testar-o-proxy-do-kong">Testar o Proxy do Kong</h3>
+<p>Agora que o Kong está instalado e funcionando, você pode testar o proxy do Kong. Use o seguinte comando para verificar:</p>
+<pre><code class="language-bash">curl -i &lt;http://localhost:8000&gt;
+</code></pre>
+<p>Se configurado corretamente, você verá a resposta padrão do Kong indicando que nenhum serviço foi configurado no gateway ainda.</p>
+<h3 id="passos-adicionais">Passos Adicionais</h3>
+<h4 id="configuracao-de-plugins-e-servicos">Configuração de Plugins e Serviços</h4>
+<p>Agora que o Kong está ativo, você pode configurar rotas, serviços e aplicar plugins de segurança, autenticação, etc., usando a API administrativa do Kong em <a href="http://localhost:8001">http://localhost:8001</a></p>
+<h4 id="parar-e-remover-os-containers">Parar e Remover os Containers</h4>
+<p>Para parar os containers, execute:</p>
+<pre><code class="language-bash">docker-compose down
+</code></pre>
+<p>Isso removerá os containers, mas manterá os dados do banco de dados no volume persistente criado.</p>
+<h4 id="configuracao-postgres-externo">Configuração Postgres externo</h4>
+<p>Alterando-se as variáveis de ambiente, pode-se fazer uso de um banco postgres.</p>
+<ul>
+<li>
+<p><strong>KONG_PG_HOST</strong>: Substitua ${KONG_PG_HOST:-external-db-host} pelo endereço do seu banco de dados PostgreSQL externo. Pode ser um nome de host ou um endereço IP, como db.example.com ou 192.168.1.100.</p>
+</li>
+<li>
+<p><strong>Remoção do serviço db</strong>: Remova o serviço, pois o banco será externo.</p>
+</li>
+<li>
+<p><strong>Password File</strong>: Certifique-se de que o arquivo de segredo que contém a senha do PostgreSQL esteja disponível localmente e seja corretamente montado.</p>
+</li>
+</ul>
+<p>Ao rodar o Docker Compose, certifique-se de que as variáveis de ambiente estejam definidas corretamente. Um exemplo de arquivo <code>.env</code> poderia ser:</p>
+<pre><code class="language-bash">KONG_DATABASE=postgres
+KONG_PG_HOST=db.example.com
+KONG_PG_USER=kong
+KONG_PG_DATABASE=kong
+KONG_DOCKER_TAG=kong:3.7.1
+</code></pre>
+<p>Essas configurações direcionam o Kong para se conectar ao banco de dados PostgreSQL externo.</p>
+<h2 id="componentes">Componentes</h2>
+<h3 id="proxy">Proxy</h3>
+<p>O Proxy é a funcionalidade principal do Kong, responsável por encaminhar solicitações entre clientes e seus serviços, aplicando políticas configuradas através de rotas e serviços.</p>
+<ul>
+<li>
+<p><strong>Encaminhamento de Solicitações</strong>: O Kong recebe as solicitações dos clientes e as direciona para os serviços apropriados, baseando-se em regras de roteamento.</p>
+</li>
+<li>
+<p><strong>Aplicação de Plugins</strong>: Realiza transformações, autenticações, monitoramento e outras funcionalidades conforme as rotas e serviços configurados.</p>
+</li>
+<li>
+<p><strong>Suporte a SSL/TLS</strong>: O proxy pode ser configurado para suportar conexões seguras via SSL.</p>
+</li>
+</ul>
+<p>Portas Padrão</p>
+<ul>
+<li><strong>Porta HTTP</strong>: 8000</li>
+<li><strong>Porta HTTPS</strong>: 8443</li>
+</ul>
+<p>Exemplo de Roteamento
+Uma solicitação pode ser roteada da seguinte forma:</p>
+<ol>
+<li>Cliente realiza um GET para <a href="http://localhost:8000/request">http://localhost:8000/request</a></li>
+<li>O Kong redireciona a solicitação para o serviço configurado em <a href="http://example.com/request">http://example.com/request</a></li>
+</ol>
+<h3 id="admin-api">Admin API</h3>
+<p>A Admin API do Kong permite a configuração e o gerenciamento de todas as entidades dentro do Kong Gateway.</p>
+<p>Ela é o ponto central para interagir diretamente com o Kong para criar, listar, atualizar e deletar recursos, como APIs, serviços, rotas e consumidores.</p>
+<p>Endereço Padrão</p>
+<ul>
+<li><strong>Porta HTTP</strong>: 8001</li>
+<li><strong>Porta HTTPS</strong>: 8444</li>
+</ul>
+<h4 id="comandos-comuns">Comandos Comuns</h4>
+<p>Listar serviços:</p>
+<pre><code class="language-bash">curl -i &lt;http://localhost:8001/services&gt;
+</code></pre>
+<p>Criar um novo serviço:</p>
+<p>```curl -i -X POST <a href="http://localhost:8001/services">http://localhost:8001/services</a> \
+  --data name=my-service \
+  --data url='<a href="http://example.com">http://example.com</a>'</p>
+<pre><code>
+Atualizar um serviço existente:
+
+```bash
+curl -i -X PATCH &lt;http://localhost:8001/services/my-service&gt; \
+  --data url='&lt;http://example.org&gt;'
+</code></pre>
+<p>Deletar um serviço:</p>
+<pre><code class="language-bash">curl -i -X DELETE &lt;http://localhost:8001/services/my-service&gt;
+</code></pre>
+<h3 id="kong-manager">Kong Manager</h3>
+<p>O Kong Manager é a interface gráfica para gerenciar e monitorar o Kong Gateway.</p>
+<p>Ele proporciona uma experiência mais acessível para a administração do Kong sem a necessidade de interações com a linha de comando.</p>
+<ul>
+<li>
+<p><strong>Interface Visual</strong>: Interface fácil de usar para gerenciar serviços, rotas, plugins e consumidores.</p>
+</li>
+<li>
+<p><strong>Gestão de Plugins</strong>: Facilita a instalação e a configuração de plugins.</p>
+</li>
+</ul>
+<p>Endereço Padrão:</p>
+<ul>
+<li><strong>Porta HTTP</strong>: 8002</li>
+<li><strong>Porta HTTPS</strong>: 8445</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": [], "search": "../../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.d6f25eb3.min.js"></script>
+      
+    
+  </body>
+</html>
