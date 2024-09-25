@@ -75,6 +75,20 @@ Por exemplo, ao rodar o comando minikube tunnel:
 
 ## Testando o serviço localmente
 
+### Configure o DNS
+
+Adicione os DNS ao `/etc/hosts`:
+
+```bash
+sudo vim /etc/hosts
+```
+
+```bash
+<Minikube-ip> admin.kong.local
+<Minikube-ip> manager.kong.local
+<Minikube-ip> proxy.kong.local
+```
+
 ### Minikube Tunnel
 
 A [documentação oficial](https://docs.konghq.com/gateway/latest/install/kubernetes/proxy/) sugere que você obtenha o proxy IP. Porém, se você tentar fazer isso localmente sem possuir IPs externos para o data plane

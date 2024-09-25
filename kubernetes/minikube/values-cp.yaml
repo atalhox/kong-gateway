@@ -1,6 +1,9 @@
 # Do not use Kong Ingress Controller
 ingressController:
-  enabled: false
+  enabled: true
+  env:
+    publish_service: kong/kong-dp-kong-proxy
+    kong_admin_token: kong_admin_password
 
 image:
   repository: kong/kong-gateway
@@ -29,16 +32,32 @@ env:
   # Kong Manager password
   password: kong_admin_password
 
+  admin_gui_url: http://manager.kong.local
+  admin_gui_api_url: http://admin.kong.local
+  # Change the secret and set cookie_secure to true if using a HTTPS endpoint
+  admin_gui_session_conf: '{"secret":"secret","storage":"kong","cookie_secure":false}'
+
 # Enterprise functionality
 enterprise:
   enabled: false
   # license_secret: kong-enterprise-license
+  # rbac:
+  #   enabled: true
+  #   admin_gui_auth: basic-auth
 
 # The control plane serves the Admin API
 admin:
   enabled: true
   http:
     enabled: true
+  tls:
+    enabled: false
+  ingress:
+    enabled: true
+    hostname: admin.kong.local
+    path: /
+    pathType: Prefix
+    ingressClassName: kong #Altere para nginx ou traefik
 
 # Clustering endpoints are required in hybrid mode
 cluster:
@@ -53,7 +72,18 @@ clustertelemetry:
 
 # Optional features
 manager:
-  enabled: false
+  enabled: true
+  http:
+    enabled: true
+  tls:
+    enabled: false
+
+  ingress:
+    enabled: true
+    hostname: manager.kong.local
+    path: /
+    pathType: Prefix
+    ingressClassName: kong
 
 # These roles will be served by different Helm releases
 proxy:
