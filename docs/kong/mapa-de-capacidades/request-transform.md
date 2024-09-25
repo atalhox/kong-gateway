@@ -145,6 +145,64 @@ Para implantar as configurações:
 deck gateway sync <deck-config.yaml>
 ```
 
+### Via Kubernetes ingress
+
+Crie um arquivo de configuração `request-transform.yaml`:
+
+```yaml
+kind: KongPlugin
+metadata:
+  name: request-transformer-example
+plugin: request-transformer
+config:
+  remove:
+    headers:
+    - x-toremove
+    - x-another-one
+    querystring:
+    - qs-old-name:qs-new-name
+    - qs2-old-name:qs2-new-name
+    body:
+    - formparam-toremove
+    - formparam-another-one
+  replace:
+    body:
+    - body-param1:new-value-1
+    - body-param2:new-value-2
+  rename:
+    headers:
+    - header-old-name:header-new-name
+    - another-old-name:another-new-name
+    querystring:
+    - qs-old-name:qs-new-name
+    - qs2-old-name:qs2-new-name
+    body:
+    - param-old:param-new
+    - param2-old:param2-new
+  add:
+    headers:
+    - x-new-header:value
+    - x-another-header:something
+    querystring:
+    - new-param:some_value
+    - another-param:some_value
+    body:
+    - new-form-param:some_value
+    - another-form-param:some_value
+```
+
+Aplique as configurações:
+
+```bash
+kubectl apply -f request-transform.yaml
+```
+
+Anote o ingress com as configurações:
+
+```bash
+kubectl annotate ingress INGRESS_NAME konghq.com/plugins=request-transformer-example
+```
+
 ### Via Kong Manager
 
 ![Request transform](/kong-gateway/assets/gifs/kong/capacities/request-transform.gif)

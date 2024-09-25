@@ -146,6 +146,36 @@ Para implantar as configurações:
 deck gateway sync <deck-config.yaml>
 ```
 
+### Via Kubernetes ingress
+
+Crie um arquivo de configuração `acl.yaml`:
+
+```yaml
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: acl-example
+plugin: acl
+config:
+  allow:
+
+- group1
+- group2
+  hide_groups_header: true
+```
+
+Aplique as configurações:
+
+```bash
+kubectl apply -f acl.yaml
+```
+
+Anote o ingress com as configurações:
+
+```bash
+kubectl annotate ingress INGRESS_NAME konghq.com/plugins=acl-example
+```
+
 ### Via Kong Manager
 
 Exemplo de configuração do plugin ACL para uma rota previamente criada e autenticação por Key Auth:

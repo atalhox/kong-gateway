@@ -55,6 +55,33 @@ Para implantar as configurações:
 deck gateway sync <deck-config.yaml>
 ```
 
+### Via Kubernetes ingress
+
+Crie um arquivo de configuração `request-termination.yaml`:
+
+```yaml
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: request-termination
+plugin: request-termination
+config:
+  status_code: 403
+  message: "This route is temporarily unavailable."
+```
+
+Aplique as configurações:
+
+```bash
+kubectl apply -f request-size-limit.yaml
+```
+
+Anote o ingress com as configurações:
+
+```bash
+kubectl annotate service SERVICE_NAME konghq.com/plugins=request-termination-example
+```
+
 ### Via Kong Manager
 
 Exemplo de configuração do plugin `Request Termination` para uma rota previamente criada:

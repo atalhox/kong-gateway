@@ -100,6 +100,41 @@ Para implantar as configurações:
 deck gateway sync <deck-config.yaml>
 ```
 
+### Via Kubernetes ingress
+
+Crie um arquivo de configuração `cache.yaml`:
+
+```yaml
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: proxy-cache-example
+plugin: proxy-cache
+config:
+  response_code:
+  - 200
+  request_method:
+  - GET
+  - HEAD
+  content_type:
+  - text/plain
+  - application/json
+  cache_ttl: 300
+  strategy: memory
+```
+
+Aplique as configurações:
+
+```bash
+kubectl apply -f cache.yaml
+```
+
+Anote o ingress com as configurações:
+
+```bash
+kubectl annotate service SERVICE_NAME konghq.com/plugins=proxy-cache-example
+```
+
 ### Via Kong Manager
 
 Exemplo de configuração do plugin Proxy Cache para uma rota previamente criada:

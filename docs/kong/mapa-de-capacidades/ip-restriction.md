@@ -65,6 +65,34 @@ Para implantar as configurações:
 deck gateway sync <deck-config.yaml>
 ```
 
+### Via Kubernetes ingress
+
+Crie um arquivo de configuração `ip-restriction.yaml`:
+
+```yaml
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: ip-restriction-example
+plugin: ip-restriction
+config:
+  allow:
+  - 54.13.21.1
+  - 143.1.0.0/24
+```
+
+Aplique as configurações:
+
+```bash
+kubectl apply -f ip-restriction.yaml
+```
+
+Anote o ingress com as configurações:
+
+```bash
+kubectl annotate service SERVICE_NAME konghq.com/plugins=ip-restriction-example
+```
+
 ### Via Kong Manager
 
 ![IP Restriction](/kong-gateway/assets/gifs/kong/capacities/ip-restriction.gif)

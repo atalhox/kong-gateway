@@ -71,6 +71,34 @@ Para implantar as configurações:
 deck gateway sync <deck-config.yaml>
 ```
 
+### Via Kubernetes ingress
+
+Crie um arquivo de configuração `rate-limit.yaml`:
+
+```yaml
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: rate-limiting-example
+plugin: rate-limiting
+config:
+  second: 5
+  hour: 10000
+  policy: local
+```
+
+Aplique as configurações:
+
+```bash
+kubectl apply -f rate-limit.yaml
+```
+
+Anote o ingress com as configurações:
+
+```bash
+kubectl annotate ingress INGRESS_NAME konghq.com/plugins=rate-limiting-example
+```
+
 ### Via Kong Manager
 
 ![Rate Limit](/kong-gateway/assets/gifs/kong/capacities/rate-limit.gif)

@@ -62,6 +62,33 @@ Para implantar as configurações:
 deck gateway sync <deck-config.yaml>
 ```
 
+### Via Kubernetes ingress
+
+Crie um arquivo de configuração `request-size-limit.yaml`:
+
+```yaml
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: request-size-limiting-example
+plugin: request-size-limiting
+config:
+  allowed_payload_size: 128
+  require_content_length: false
+```
+
+Aplique as configurações:
+
+```bash
+kubectl apply -f request-size-limit.yaml
+```
+
+Anote o ingress com as configurações:
+
+```bash
+kubectl annotate ingress INGRESS_NAME konghq.com/plugins=request-size-limiting-example
+```
+
 ### Via Kong Manager
 
 ![Request size limit](/kong-gateway/assets/gifs/kong/capacities/request-size-limiting.gif)

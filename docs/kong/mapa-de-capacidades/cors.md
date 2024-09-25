@@ -22,7 +22,9 @@ O frontend da aplicação é hospedado em um domínio diferente do backend da AP
 
 Com isso, os usuários podem navegar e fazer compras sem interrupções, resultando em uma experiência de usuário fluida e segura.
 
-## Via API administrativa
+## Como configurar o CORS do Kong
+
+### Via API administrativa
 
 Você pode habilitar o CORS para uma rota específica usando o seguinte comando:
 
@@ -42,7 +44,7 @@ Substitua `{route_id}` pelo ID ou nome da rota para a qual você deseja habilita
 
 Assim como a rota, épossívelconfigurar para um serviço.
 
-## Via decK
+### Via decK
 
 Adicione as seguintes configurações em sua config decK.
 
@@ -77,9 +79,51 @@ Para implantar as configurações:
 deck gateway sync <deck-config.yaml>
 ```
 
-## Via Kong Manager
+### Via Kong Manager
 
 Exemplo de configuração do plugin CORS para uma rota previamente criada:
+
+### Via Kubernetes ingress
+
+Crie um arquivo de configuração `cors.yaml`:
+
+```yaml
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: cors-example
+plugin: cors
+config:
+  origins:
+  - http://mockbin.com
+  methods:
+  - GET
+  - POST
+  headers:
+  - Accept
+  - Accept-Version
+  - Content-Length
+  - Content-MD5
+  - Content-Type
+  - Date
+  - X-Auth-Token
+  exposed_headers:
+  - X-Auth-Token
+  credentials: true
+  max_age: 3600
+```
+
+Aplique as configurações:
+
+```bash
+kubectl apply -f cors.yaml
+```
+
+Anote o ingress com as configurações:
+
+```bash
+kubectl annotate ingress INGRESS_NAME konghq.com/plugins=cors-example
+```
 
 ![CORS](/kong-gateway/assets/gifs/kong/capacities/cors.gif)
 
