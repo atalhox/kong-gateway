@@ -32,6 +32,7 @@ env:
 # Enterprise functionality
 enterprise:
   enabled: false
+  # license_secret: kong-enterprise-license
 
 # The control plane serves the Admin API
 admin:
@@ -58,6 +59,10 @@ manager:
 proxy:
   enabled: false
 
+# This is for testing purposes only
+# DO NOT DO THIS IN PRODUCTION
+# Your cluster needs a way to create PersistentVolumeClaims
+# if this option is enabled
 postgresql:
   enabled: true
   auth:
