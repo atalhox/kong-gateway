@@ -1,3 +1,6 @@
+RELEASE_DIR=./deck/releases
+DUMP_DIR=./deck/dumps
+
 setup: 
 	helm repo add kong https://charts.konghq.com
 	helm repo update
@@ -14,9 +17,29 @@ install:
 	helm install kong-cp kong/kong -n kong --values ./values-cp.yaml
 	helm install kong-dp kong/kong -n kong --values ./values-dp.yaml
 
-full-install: setup namespace certificates install
+deploy: dump
+	@LAST_RELEASE=$(shell ls -t $(RELEASE_DIR) | head -1) && \
+	deck gateway sync $(RELEASE_DIR)/$$LAST_RELEASE --kong-addr=http://localhost:8001
 
-upgrade: 
+dump: 
+	mkdir -p $(DUMP_DIR) && \
+	DUMP_FILE=$(DUMP_DIR)/dump-$(shell date +%Y%m%d%H%M%S).yaml && \
+	deck gateway dump --format yaml > $$DUMP_FILE && \
+	echo "Dump created at: $$DUMP_FILE"
+
+full-install: setup namespace certificates install # port-forward + deploy
+
+tunnel: 
+	minikube tunnel
+
+port-forward: 
+	kubectl port-forward -n kong service/kong-cp-kong-admin 8001 & \
+	kubectl port-forward -n kong service/kong-cp-kong-manager 8002 &
+
+kill: 
+	pkill -f 'kubectl port-forward'
+
+upgrade:
 	helm upgrade kong-cp kong/kong -n kong --values ./values-cp.yaml
 	helm upgrade kong-dp kong/kong -n kong --values ./values-dp.yaml
 

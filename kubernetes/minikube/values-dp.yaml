@@ -1,14 +1,28 @@
-# Do not use Kong Ingress Controller
 ingressController:
   enabled: false
 
 image:
-  repository: kong/kong-gateway
-  tag: "3.8.0.0"
+  repository: kong
+  tag: "3.8.0"
+
+# plugins:
+#   enabled:
+#     - traceheader-lua
 
 # Mount the secret created earlier
 secretVolumes:
   - kong-cluster-cert
+
+gateway:
+  plugins:
+    # configMaps:
+    # - pluginName: rewriter
+    #   name: kong-plugin-rewriter
+    configMaps:
+      - pluginName: traceheader-lua
+        name: kong-plugin-traceheader-lua
+      - pluginName: my-plugin
+        name: kong-plugin-my-plugin
 
 env:
   # data_plane nodes do not have a database
@@ -23,6 +37,8 @@ env:
   lua_ssl_trusted_certificate: /etc/secrets/kong-cluster-cert/tls.crt
   cluster_cert: /etc/secrets/kong-cluster-cert/tls.crt
   cluster_cert_key: /etc/secrets/kong-cluster-cert/tls.key
+
+  KONG_LUA_PACKAGE_PATH: "/usr/local/share/lua/5.1/?.lua;;"
 
 # Enterprise functionality
 enterprise:

@@ -41,6 +41,14 @@ Exemplo: `minikube delete --all`
 **--purge**: Remove também os arquivos de configuração e de cache.
 Exemplo: `minikube delete --purge`
 
+## Service
+
+Irá expor o service via NodePort.
+
+```bash
+minikube service <service-name> --url
+```
+
 ## Dashboard
 
 Abre o dashboard web do Kubernetes para o cluster em execução no Minikube. O dashboard oferece uma interface gráfica para visualizar e gerenciar recursos do Kubernetes, como Pods, Deployments, Services, etc.

@@ -1,0 +1,243 @@
+_format_version: "3.0"
+services:
+- connect_timeout: 60000
+  enabled: true
+  host: kong-cp-kong-admin.kong.8001.svc
+  name: kong.kong-cp-kong-admin.8001
+  path: /
+  port: 8001
+  protocol: http
+  read_timeout: 60000
+  retries: 5
+  routes:
+  - hosts:
+    - admin.kong.local
+    https_redirect_status_code: 426
+    name: kong.kong-cp-kong-admin.kong-cp-kong-admin.admin.kong.local.8001
+    path_handling: v0
+    paths:
+    - /
+    preserve_host: true
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - k8s-name:kong-cp-kong-admin
+    - k8s-namespace:kong
+    - k8s-kind:Ingress
+    - k8s-uid:63c997d2-542d-4b74-9f7f-537491388a8e
+    - k8s-group:networking.k8s.io
+    - k8s-version:v1
+    - managed-by-ingress-controller
+  tags:
+  - k8s-name:kong-cp-kong-admin
+  - k8s-namespace:kong
+  - k8s-kind:Service
+  - k8s-uid:d52d222b-2210-4783-aafb-58909fc45c5b
+  - k8s-version:v1
+  - managed-by-ingress-controller
+  write_timeout: 60000
+- connect_timeout: 60000
+  enabled: true
+  host: kong-cp-kong-manager.kong.8002.svc
+  name: kong.kong-cp-kong-manager.8002
+  path: /
+  port: 8002
+  protocol: http
+  read_timeout: 60000
+  retries: 5
+  routes:
+  - hosts:
+    - manager.kong.local
+    https_redirect_status_code: 426
+    name: kong.kong-cp-kong-manager.kong-cp-kong-manager.manager.kong.local.8002
+    path_handling: v0
+    paths:
+    - /
+    preserve_host: true
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+    tags:
+    - k8s-name:kong-cp-kong-manager
+    - k8s-namespace:kong
+    - k8s-kind:Ingress
+    - k8s-uid:24d88941-9e10-4728-b5fc-b2c949050198
+    - k8s-group:networking.k8s.io
+    - k8s-version:v1
+    - managed-by-ingress-controller
+  tags:
+  - k8s-name:kong-cp-kong-manager
+  - k8s-namespace:kong
+  - k8s-kind:Service
+  - k8s-uid:75653603-3819-4913-ae88-759e48096aea
+  - k8s-version:v1
+  - managed-by-ingress-controller
+  write_timeout: 60000
+upstreams:
+- algorithm: round-robin
+  hash_fallback: none
+  hash_on: none
+  hash_on_cookie_path: /
+  healthchecks:
+    active:
+      concurrency: 10
+      healthy:
+        http_statuses:
+        - 200
+        - 302
+        interval: 0
+        successes: 0
+      http_path: /
+      https_verify_certificate: true
+      timeout: 1
+      type: http
+      unhealthy:
+        http_failures: 0
+        http_statuses:
+        - 429
+        - 404
+        - 500
+        - 501
+        - 502
+        - 503
+        - 504
+        - 505
+        interval: 0
+        tcp_failures: 0
+        timeouts: 0
+    passive:
+      healthy:
+        http_statuses:
+        - 200
+        - 201
+        - 202
+        - 203
+        - 204
+        - 205
+        - 206
+        - 207
+        - 208
+        - 226
+        - 300
+        - 301
+        - 302
+        - 303
+        - 304
+        - 305
+        - 306
+        - 307
+        - 308
+        successes: 0
+      type: http
+      unhealthy:
+        http_failures: 0
+        http_statuses:
+        - 429
+        - 500
+        - 503
+        tcp_failures: 0
+        timeouts: 0
+    threshold: 0
+  name: kong-cp-kong-admin.kong.8001.svc
+  slots: 10000
+  tags:
+  - k8s-name:kong-cp-kong-admin
+  - k8s-namespace:kong
+  - k8s-kind:Service
+  - k8s-uid:d52d222b-2210-4783-aafb-58909fc45c5b
+  - k8s-version:v1
+  - managed-by-ingress-controller
+  targets:
+  - tags:
+    - managed-by-ingress-controller
+    target: 10.244.0.115:8001
+    weight: 100
+  use_srv_name: false
+- algorithm: round-robin
+  hash_fallback: none
+  hash_on: none
+  hash_on_cookie_path: /
+  healthchecks:
+    active:
+      concurrency: 10
+      healthy:
+        http_statuses:
+        - 200
+        - 302
+        interval: 0
+        successes: 0
+      http_path: /
+      https_verify_certificate: true
+      timeout: 1
+      type: http
+      unhealthy:
+        http_failures: 0
+        http_statuses:
+        - 429
+        - 404
+        - 500
+        - 501
+        - 502
+        - 503
+        - 504
+        - 505
+        interval: 0
+        tcp_failures: 0
+        timeouts: 0
+    passive:
+      healthy:
+        http_statuses:
+        - 200
+        - 201
+        - 202
+        - 203
+        - 204
+        - 205
+        - 206
+        - 207
+        - 208
+        - 226
+        - 300
+        - 301
+        - 302
+        - 303
+        - 304
+        - 305
+        - 306
+        - 307
+        - 308
+        successes: 0
+      type: http
+      unhealthy:
+        http_failures: 0
+        http_statuses:
+        - 429
+        - 500
+        - 503
+        tcp_failures: 0
+        timeouts: 0
+    threshold: 0
+  name: kong-cp-kong-manager.kong.8002.svc
+  slots: 10000
+  tags:
+  - k8s-name:kong-cp-kong-manager
+  - k8s-namespace:kong
+  - k8s-kind:Service
+  - k8s-uid:75653603-3819-4913-ae88-759e48096aea
+  - k8s-version:v1
+  - managed-by-ingress-controller
+  targets:
+  - tags:
+    - managed-by-ingress-controller
+    target: 10.244.0.115:8002
+    weight: 100
+  use_srv_name: false

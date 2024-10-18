@@ -1,0 +1,82 @@
+apiVersion: configuration.konghq.com/v1
+config:
+  allow:
+  - group1
+  - group2
+  deny: null
+  hide_groups_header: true
+kind: KongPlugin
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: kong
+  name: sample-petstore-v1-sample-acl-v1-acl
+plugin: acl
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  annotations:
+    konghq.com/https-redirect-status-code: "426"
+    konghq.com/path-handling: v0
+    konghq.com/preserve-host: "false"
+    konghq.com/regex-priority: "0"
+    konghq.com/request-buffering: "true"
+    konghq.com/response-buffering: "true"
+    konghq.com/strip-path: "true"
+  name: sample-petstore-v1-sample-acl-v1
+spec:
+  parentRefs:
+  - name: kong
+  rules:
+  - backendRefs:
+    - name: sample-petstore-v1
+      port: 443
+    filters:
+    - extensionRef:
+        group: configuration.konghq.com
+        kind: KongPlugin
+        name: sample-petstore-v1-sample-acl-v1-acl
+      type: ExtensionRef
+    matches:
+    - path:
+        type: PathPrefix
+        value: /sample/v1/acl
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/connect-timeout: "60000"
+    konghq.com/path: /
+    konghq.com/protocol: https
+    konghq.com/read-timeout: "60000"
+    konghq.com/retries: "5"
+    konghq.com/write-timeout: "60000"
+  name: sample-httpbin-v1
+spec:
+  ports:
+  - port: 443
+    protocol: TCP
+    targetPort: 443
+  selector:
+    app: sample-httpbin-v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/connect-timeout: "60000"
+    konghq.com/path: /v2
+    konghq.com/protocol: https
+    konghq.com/read-timeout: "60000"
+    konghq.com/retries: "5"
+    konghq.com/write-timeout: "60000"
+  name: sample-petstore-v1
+spec:
+  ports:
+  - port: 443
+    protocol: TCP
+    targetPort: 443
+  selector:
+    app: sample-petstore-v1
+---
