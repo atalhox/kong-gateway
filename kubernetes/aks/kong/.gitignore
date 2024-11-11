@@ -1,0 +1,28 @@
+# Ignorar arquivos de estado do Terraform
+*.tfstate
+*.tfstate.*
+
+# Ignorar logs de crash do Terraform
+crash.log
+
+# Ignorar arquivos de plano do Terraform
+*.tfplan
+
+# Ignorar override local e arquivos de configuração
+override.tf
+override.tf.json
+*.override.tf
+*.override.tf.json
+
+# Ignorar arquivos de configuração com variáveis sensíveis
+.terraformrc
+terraform.rc
+
+# Ignorar diretório .terraform que armazena módulos baixados
+.terraform/
+
+# Arquivo de lock do provedor
+.terraform.lock.hcl
+
+terraform.tfvars
+terraform.log

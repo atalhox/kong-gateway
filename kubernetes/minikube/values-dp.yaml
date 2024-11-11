@@ -5,24 +5,9 @@ image:
   repository: kong
   tag: "3.8.0"
 
-# plugins:
-#   enabled:
-#     - traceheader-lua
-
 # Mount the secret created earlier
 secretVolumes:
   - kong-cluster-cert
-
-gateway:
-  plugins:
-    # configMaps:
-    # - pluginName: rewriter
-    #   name: kong-plugin-rewriter
-    configMaps:
-      - pluginName: traceheader-lua
-        name: kong-plugin-traceheader-lua
-      - pluginName: my-plugin
-        name: kong-plugin-my-plugin
 
 env:
   # data_plane nodes do not have a database
@@ -39,15 +24,30 @@ env:
   cluster_cert_key: /etc/secrets/kong-cluster-cert/tls.key
 
   KONG_LUA_PACKAGE_PATH: "/usr/local/share/lua/5.1/?.lua;;"
+  KONG_LOG_LEVEL: debug
+  KONG_PLUGINS: "bundled, my-plugin"
 
 # Enterprise functionality
 enterprise:
   enabled: false
 
 # The data plane handles proxy traffic only
+# Specify Kong proxy service configuration
 proxy:
   enabled: true
+  http:
+    enabled: true
+  tls:
+    enabled: false
+  ingress:
+    enabled: true
+    hostname: proxy.kong.local
+    path: /
+    pathType: Prefix
+    ingressClassName: nginx
 
+  # Optionally specify a static load balancer IP.
+  # loadBalancerIP:
 # These roles are served by the kong-cp deployment
 admin:
   enabled: false

@@ -19,13 +19,13 @@ install:
 
 deploy: dump
 	@LAST_RELEASE=$(shell ls -t $(RELEASE_DIR) | head -1) && \
-	deck gateway sync $(RELEASE_DIR)/$$LAST_RELEASE --kong-addr=http://localhost:8001
+	deck gateway sync $(RELEASE_DIR)/$$LAST_RELEASE --kong-addr=http://admin.kong.local:80
 
 dump: 
 	mkdir -p $(DUMP_DIR) && \
 	DUMP_FILE=$(DUMP_DIR)/dump-$(shell date +%Y%m%d%H%M%S).yaml && \
-	deck gateway dump --format yaml > $$DUMP_FILE && \
-	echo "Dump created at: $$DUMP_FILE"
+	deck gateway dump --format yaml  --kong-addr=http://admin.kong.local:80 > $$DUMP_FILE && \
+	echo "Dump created at: $$DUMP_FILE" 
 
 full-install: setup namespace certificates install # port-forward + deploy
 

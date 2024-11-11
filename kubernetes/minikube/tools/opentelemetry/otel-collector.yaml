@@ -1,0 +1,36 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: OpenTelemetryCollector
+metadata:
+  name: otel-collector
+spec:
+  config: |
+    receivers:
+      otlp:
+        protocols:
+          http:
+          grpc:
+
+    processors:
+      batch:
+      memory_limiter:
+        limit_mib: 400
+        spike_limit_mib: 100
+        check_interval: 5s
+
+    exporters:
+      logging:
+      prometheus:
+        endpoint: "0.0.0.0:8888"
+      otlp:
+        endpoint: "your-endpoint:4317"
+
+    service:
+      pipelines:
+        metrics:
+          receivers: [otlp]
+          processors: [batch, memory_limiter]
+          exporters: [logging, prometheus, otlp]
+        traces:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [logging, otlp]
