@@ -1,4 +1,4 @@
-site_name: API Gateways
+site_name: Kong Gateway
 site_url: https://atalhox.github.io/kong-gateway/
 plugins:
   - mermaid2

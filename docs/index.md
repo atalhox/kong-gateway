@@ -1,8 +1,12 @@
-# Introdução
+# API Gateway
 
-Esta documentação fornece uma visão abrangente sobre API Gateways e sua importância no ambiente corporativo. As ferramentas de API Gateway são equipadas com um robusto conjunto de funcionalidades, seja nativamente ou por meio de extensões, que facilitam a gestão de APIs em grande escala.
+Esta documentação fornece uma visão abrangente sobre API Gateways e sua importância no ambiente corporativo.
 
-Além disso, esta documentação também explorará diferentes ferramentas de API Gateway, cada uma com suas próprias funcionalidades e características únicas. Cada ferramenta poderá possuir uma nomenclatura específica para funcionalidades de Gateways que poderão ser encontradas aqui pelos nomes mais comumente vistos no mercado.
+As ferramentas de API Gateway são equipadas com um robusto conjunto de funcionalidades, seja nativamente ou por meio de extensões, que facilitam a gestão de APIs em grande escala.
+
+Além disso, esta documentação também explorará diferentes ferramentas de API Gateway, cada uma com suas próprias funcionalidades e características únicas.
+
+Cada ferramenta poderá possuir uma nomenclatura específica para funcionalidades de Gateways que poderão ser encontradas aqui pelos nomes mais comumente vistos no mercado.
 
 ## O que são API Gateways?
 
@@ -32,4 +36,32 @@ Ele também pode modificar a solicitação ou a resposta, ou acionar outras aç�
 
 Em sua maioria, os gateways possuem funcionalidades integradas que operam de forma nativa, no entanto, outras capacidades podem ser expandidas e até mesmo personalizadas através do uso de políticas, extensões ou plugins.
 
-![Topologia](/assets/img/topologias/integracao-gateway.png)
+## Kong Gateway
+
+O Kong Gateway é uma solução robusta e altamente extensível para gerenciamento de APIs, com funcionalidades que permitem maior controle, segurança e flexibilidade sobre as APIs expostas. Ele oferece uma arquitetura flexível e pode ser implantado em várias infraestruturas, seja on-premise, em nuvem ou em ambientes híbridos.
+
+### Características
+
+#### Gerenciamento de Tráfego
+
+Kong permite roteamento inteligente de solicitações para diferentes serviços de backend, além de oferecer balanceamento de carga, permitindo uma distribuição eficaz de requisições.
+
+#### Segurança
+
+Com suporte nativo a plugins para autenticação, autorização e políticas de segurança, o Kong ajuda a proteger os endpoints expostos.
+
+Também é possível integrar com serviços de autenticação como OAuth2 e OpenID Connect.
+
+#### Monitoramento e Observabilidade
+
+O Kong oferece integração com ferramentas de monitoramento como Prometheus, Grafana e OpenTelemetry, o que facilita a captura de métricas e o monitoramento de logs e eventos.
+
+#### Plugins
+
+Um dos pontos fortes do Kong é seu ecossistema de plugins, permitindo extensões customizadas de funcionalidades, como caching, limitação de taxa, políticas de segurança, transformação de payload e muito mais.
+
+Isso facilita a adaptação do Kong a diferentes requisitos de negócios.
+
+#### Suporte ao Kubernetes
+
+Com sua capacidade de integração nativa com Kubernetes, o Kong pode atuar como um Ingress Controller, permitindo o gerenciamento de APIs diretamente no ambiente Kubernetes e facilitando o controle de tráfego em ambientes de microsserviços.

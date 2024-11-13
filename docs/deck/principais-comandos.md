@@ -1,6 +1,6 @@
-# Comandos
+# Principais comandos
 
-A seguir estão os principais comandos do decK utilizados para gerenciar configurações no Kong Gateway.
+A seguir estão os principais comandos do decK utilizados para gerenciar configurações no Kong Gateway, muito úteis para uma esteira e automação de implantação.
 
 Estes comandos permitem desde a validação de arquivos de configuração até operações avançadas como sync, diff, e merge de arquivos.
 
