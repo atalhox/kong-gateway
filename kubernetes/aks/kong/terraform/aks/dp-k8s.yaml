@@ -1,0 +1,337 @@
+---
+# Source: kong/templates/service-account.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: data-plane-kong
+  namespace: default
+  labels:
+    app.kubernetes.io/name: kong
+    helm.sh/chart: kong-2.42.0
+    app.kubernetes.io/instance: "data-plane"
+    app.kubernetes.io/managed-by: "Helm"
+    
+    app.kubernetes.io/version: "3.8"
+---
+# Source: kong/templates/service-kong-proxy.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: data-plane-kong-proxy
+  namespace: default
+  labels:
+    app.kubernetes.io/name: kong
+    helm.sh/chart: kong-2.42.0
+    app.kubernetes.io/instance: "data-plane"
+    app.kubernetes.io/managed-by: "Helm"
+    
+    app.kubernetes.io/version: "3.8"
+    enable-metrics: "true"
+spec:
+  type: LoadBalancer
+  ports:
+  - name: kong-proxy
+    port: 80
+    targetPort: 8000
+    protocol: TCP
+  - name: kong-proxy-tls
+    port: 443
+    targetPort: 8443
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: kong
+    app.kubernetes.io/component: app
+    app.kubernetes.io/instance: "data-plane"
+---
+# Source: kong/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-plane-kong
+  namespace:  default
+  labels:
+    app.kubernetes.io/name: kong
+    helm.sh/chart: kong-2.42.0
+    app.kubernetes.io/instance: "data-plane"
+    app.kubernetes.io/managed-by: "Helm"
+    
+    app.kubernetes.io/version: "3.8"
+    app.kubernetes.io/component: app
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kong
+      app.kubernetes.io/component: app
+      app.kubernetes.io/instance: "data-plane"
+
+  template:
+    metadata:
+      annotations:
+        kuma.io/service-account-token-volume: data-plane-kong-token
+        kuma.io/gateway: "enabled"
+        traffic.sidecar.istio.io/includeInboundPorts: ""
+      labels:
+        app.kubernetes.io/name: kong
+        helm.sh/chart: kong-2.42.0
+        app.kubernetes.io/instance: "data-plane"
+        app.kubernetes.io/managed-by: "Helm"
+        
+        app.kubernetes.io/version: "3.8"
+        app.kubernetes.io/component: app
+        app: data-plane-kong
+        
+        version: "3.8"
+    spec:
+      serviceAccountName: data-plane-kong
+      automountServiceAccountToken: false
+      
+      initContainers:
+      - name: clear-stale-pid
+        image: kong/kong-gateway:3.8.0.0
+        imagePullPolicy: IfNotPresent
+        securityContext:
+        
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1000
+          seccompProfile:
+            type: RuntimeDefault
+        resources:
+          {}
+        command:
+        - "rm"
+        - "-vrf"
+        - "$KONG_PREFIX/pids"
+        env:
+         
+        
+        
+        - name: KONG_ADMIN_ACCESS_LOG
+          value: "/dev/stdout"
+        - name: KONG_ADMIN_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_ADMIN_GUI_ACCESS_LOG
+          value: "/dev/stdout"
+        - name: KONG_ADMIN_GUI_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_ADMIN_LISTEN
+          value: "127.0.0.1:8444 http2 ssl, [::1]:8444 http2 ssl"
+        - name: KONG_CLUSTER_CERT
+          value: "/etc/secrets/kong-cluster-cert/tls.crt"
+        - name: KONG_CLUSTER_CERT_KEY
+          value: "/etc/secrets/kong-cluster-cert/tls.key"
+        - name: KONG_CLUSTER_CONTROL_PLANE
+          value: "kong-cp-kong-cluster.kong.svc.cluster.local:8005"
+        - name: KONG_CLUSTER_LISTEN
+          value: "off"
+        - name: KONG_CLUSTER_TELEMETRY_ENDPOINT
+          value: "kong-cp-kong-clustertelemetry.kong.svc.cluster.local:8006"
+        - name: KONG_DATABASE
+          value: "off"
+        - name: KONG_LUA_PACKAGE_PATH
+          value: "/opt/?.lua;/opt/?/init.lua;;"
+        - name: KONG_LUA_SSL_TRUSTED_CERTIFICATE
+          value: "/etc/secrets/kong-cluster-cert/tls.crt"
+        - name: KONG_NGINX_WORKER_PROCESSES
+          value: "2"
+        - name: KONG_PORTAL_API_ACCESS_LOG
+          value: "/dev/stdout"
+        - name: KONG_PORTAL_API_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_PORT_MAPS
+          value: "80:8000, 443:8443"
+        - name: KONG_PREFIX
+          value: "/kong_prefix/"
+        - name: KONG_PROXY_ACCESS_LOG
+          value: "/dev/stdout"
+        - name: KONG_PROXY_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_PROXY_LISTEN
+          value: "0.0.0.0:8000, [::]:8000, 0.0.0.0:8443 http2 ssl, [::]:8443 http2 ssl"
+        - name: KONG_PROXY_STREAM_ACCESS_LOG
+          value: "/dev/stdout basic"
+        - name: KONG_PROXY_STREAM_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_ROLE
+          value: "data_plane"
+        - name: KONG_ROUTER_FLAVOR
+          value: "traditional"
+        - name: KONG_STATUS_ACCESS_LOG
+          value: "off"
+        - name: KONG_STATUS_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_STATUS_LISTEN
+          value: "0.0.0.0:8100, [::]:8100"
+        - name: KONG_STREAM_LISTEN
+          value: "off"
+        
+        volumeMounts:
+        - name: data-plane-kong-prefix-dir
+          mountPath: /kong_prefix/
+        - name: data-plane-kong-tmp
+          mountPath: /tmp
+        - name:  kong-cluster-cert
+          mountPath: /etc/secrets/kong-cluster-cert
+      containers:
+      - name: "proxy"
+        image: kong/kong-gateway:3.8.0.0
+        imagePullPolicy: IfNotPresent
+        securityContext:
+        
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1000
+          seccompProfile:
+            type: RuntimeDefault
+        env:
+         
+        
+        
+        - name: KONG_ADMIN_ACCESS_LOG
+          value: "/dev/stdout"
+        - name: KONG_ADMIN_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_ADMIN_GUI_ACCESS_LOG
+          value: "/dev/stdout"
+        - name: KONG_ADMIN_GUI_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_ADMIN_LISTEN
+          value: "127.0.0.1:8444 http2 ssl, [::1]:8444 http2 ssl"
+        - name: KONG_CLUSTER_CERT
+          value: "/etc/secrets/kong-cluster-cert/tls.crt"
+        - name: KONG_CLUSTER_CERT_KEY
+          value: "/etc/secrets/kong-cluster-cert/tls.key"
+        - name: KONG_CLUSTER_CONTROL_PLANE
+          value: "kong-cp-kong-cluster.kong.svc.cluster.local:8005"
+        - name: KONG_CLUSTER_LISTEN
+          value: "off"
+        - name: KONG_CLUSTER_TELEMETRY_ENDPOINT
+          value: "kong-cp-kong-clustertelemetry.kong.svc.cluster.local:8006"
+        - name: KONG_DATABASE
+          value: "off"
+        - name: KONG_LUA_PACKAGE_PATH
+          value: "/opt/?.lua;/opt/?/init.lua;;"
+        - name: KONG_LUA_SSL_TRUSTED_CERTIFICATE
+          value: "/etc/secrets/kong-cluster-cert/tls.crt"
+        - name: KONG_NGINX_WORKER_PROCESSES
+          value: "2"
+        - name: KONG_PORTAL_API_ACCESS_LOG
+          value: "/dev/stdout"
+        - name: KONG_PORTAL_API_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_PORT_MAPS
+          value: "80:8000, 443:8443"
+        - name: KONG_PREFIX
+          value: "/kong_prefix/"
+        - name: KONG_PROXY_ACCESS_LOG
+          value: "/dev/stdout"
+        - name: KONG_PROXY_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_PROXY_LISTEN
+          value: "0.0.0.0:8000, [::]:8000, 0.0.0.0:8443 http2 ssl, [::]:8443 http2 ssl"
+        - name: KONG_PROXY_STREAM_ACCESS_LOG
+          value: "/dev/stdout basic"
+        - name: KONG_PROXY_STREAM_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_ROLE
+          value: "data_plane"
+        - name: KONG_ROUTER_FLAVOR
+          value: "traditional"
+        - name: KONG_STATUS_ACCESS_LOG
+          value: "off"
+        - name: KONG_STATUS_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_STATUS_LISTEN
+          value: "0.0.0.0:8100, [::]:8100"
+        - name: KONG_STREAM_LISTEN
+          value: "off"
+        - name: KONG_NGINX_DAEMON
+          value: "off"
+        
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - kong
+              - quit
+              - --wait=15
+        ports:
+        - name: proxy
+          containerPort: 8000
+          protocol: TCP
+        - name: proxy-tls
+          containerPort: 8443
+          protocol: TCP
+        - name: status
+          containerPort: 8100
+          protocol: TCP
+        volumeMounts:
+          - name: data-plane-kong-prefix-dir
+            mountPath: /kong_prefix/
+          - name: data-plane-kong-tmp
+            mountPath: /tmp
+          - name:  kong-cluster-cert
+            mountPath: /etc/secrets/kong-cluster-cert
+          
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /status/ready
+            port: status
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /status
+            port: status
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        resources:
+          {} 
+      securityContext:
+        {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - name: data-plane-kong-prefix-dir
+          emptyDir:
+            sizeLimit: 256Mi
+        - name: data-plane-kong-tmp
+          emptyDir:
+            sizeLimit: 1Gi
+        - name: data-plane-kong-token
+          projected:
+            sources:
+            - serviceAccountToken:
+                expirationSeconds: 3607
+                path: token
+            - configMap:
+                items:
+                - key: ca.crt
+                  path: ca.crt
+                name: kube-root-ca.crt
+            - downwardAPI:
+                items:
+                - fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+                  path: namespace
+        - name: kong-cluster-cert
+          secret:
+            secretName: kong-cluster-cert

@@ -1,1 +1,1 @@
-# Guia de instalação - Ku
+# Guia de instalação - Kubernetes

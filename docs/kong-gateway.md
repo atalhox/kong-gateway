@@ -1,79 +1,122 @@
-# Kong
+# Kong Gateway
 
-O **Kong Gateway** é uma solução robusta e altamente extensível para gerenciamento de APIs, projetado para lidar com grandes volumes de tráfego, oferecendo funcionalidades de controle, segurança e flexibilidade sobre as APIs expostas.
+O Kong Gateway é uma solução robusta e extensível para o gerenciamento de APIs, projetada para lidar com grandes volumes de tráfego.
 
-Ele atua como um middleware entre os consumidores de API e os serviços upstream, garantindo alta disponibilidade e protegendo os endpoints de API contra ameaças potenciais.
+Ele oferece funcionalidades avançadas para controle, segurança e flexibilidade, atuando como middleware entre os consumidores de API e os serviços upstream. Suas implementações podem ser feitas on-premise, na nuvem ou em ambientes híbridos.
 
-O Kong pode ser implantado on-premise, em nuvem ou em ambientes híbridos.
-
-## Principais características
+## Principais Características
 
 ### Gerenciamento de Tráfego
 
-O Kong permite roteamento inteligente de solicitações para diferentes serviços de backend e oferece balanceamento de carga, garantindo distribuição eficaz de requisições e maior desempenho das APIs.
+#### Roteamento Inteligente
 
-### Segurança de API e Proteção de Endpoints
+Direciona solicitações para diferentes serviços de backend
 
-Com suporte nativo a plugins para autenticação, autorização e políticas de segurança, o Kong protege os endpoints expostos.
+#### Balanceamento de Carga
 
-O Kong oferece robustos recursos de segurança, suportando autenticação, autorização, criptografia de dados em trânsito e proteção contra ataques DDoS.
+Garante distribuição eficiente de requisições para maior desempenho
 
-Ele também permite integração com serviços de autenticação e autorização como OAuth2 e OpenID Connect.
+### Segurança de API
 
-### Monitoramento e observabilidade integrados
+#### Proteção de Endpoints
 
-O Kong oferece integração com ferramentas de monitoramento como **Prometheus**, **Grafana** e **OpenTelemetry**, facilitando a captura de métricas e o monitoramento de logs e eventos.
+Plugins nativos para autenticação, autorização e políticas de segurança
 
-### Plugins personalizados e extensão de capacidades
+#### Integrações
 
-O Kong possui um ecossistema de plugins, permitindo extensões personalizadas de funcionalidades, como caching, limitação de taxa, políticas de segurança e transformação de mensagem.
+Suporte a padrões como OAuth2 e OpenID Connect, além de criptografia e proteção contra ataques DDoS
 
-Isso facilita a adaptação a diferentes requisitos de negócios e proporciona um controle total sobre o comportamento do gateway.
+### Monitoramento e Observabilidade
 
-### Integração com Kubernetes e Microsserviços
+#### Integração com Ferramentas
 
-Com integração nativa ao **Kubernetes**, o Kong pode atuar como um Ingress Controller, gerenciando APIs diretamente em ambientes Kubernetes e facilitando o controle de tráfego em arquiteturas de microsserviços.
+Compatível com Prometheus, Grafana e OpenTelemetry para métricas e logs
 
-## Vantagens do Kong Gateway para empresas
+### Plugins e Extensibilidade
+
+#### Ecossistema de Plugins
+
+Recursos como caching, limitação de taxa e transformação de mensagens
+
+#### Personalização
+
+Desenvolvimento de plugins específicos para requisitos empresariais
+
+### Integração com Kubernetes
+
+Atua como Ingress Controller, gerenciando APIs e facilitando controle de tráfego em arquiteturas de microsserviços.
+
+## Vantagens do Kong Gateway para Empresas
 
 ### Escalabilidade
 
-Projetado para lidar com grandes volumes de tráfego, o Kong permite adicionar ou remover recursos conforme necessário sem interrupções, mantendo desempenho consistente independentemente do volume de requisições.
+Projeta-se para suportar grandes volumes de tráfego, com adição ou remoção de recursos sem interrupções.
 
 ### Arquitetura Flexível e Extensível
 
-Kong oferece flexibilidade e extensibilidade através de sua arquitetura de plugins. Além dos plugins disponíveis para funcionalidades como autenticação, limitação de taxa e caching, é possível desenvolver plugins personalizados para atender a necessidades específicas.
+Adaptação a diferentes infraestruturas com suporte nativo e extensões via plugins.
 
-### Desempenho Otimizado para Alta Demanda
+### Desempenho
 
-O Kong é conhecido pelo alto desempenho, suportando baixas latências e alto throughput, utilizando **NGINX** como base.
+#### Alta Performance
 
-Isso assegura que as requisições de API sejam processadas rapidamente, oferecendo uma experiência de usuário final mais satisfatória.
+Baseado no NGINX, com latências reduzidas e alto throughput
 
-### Comunidade ativa e suporte empresarial
+### Comunidade e Suporte
 
-Kong possui uma comunidade ativa e um suporte corporativo forte, com contribuições de desenvolvedores que enriquecem a ferramenta com novos plugins, atualizações e melhores práticas.
+Comunidade ativa, contribuições frequentes e suporte empresarial confiável.
 
-## Ambiente de instalação
+## Modelos de Licenciamento
 
-Kong pode ser implementado em diversos ambientes, incluindo nuvens públicas, privadas e híbridas, além de instalações on-premise.
+### Open Source
 
-Sua flexibilidade permite adaptação a diferentes infraestruturas, integrando-se facilmente com serviços de backend e plataformas de orquestração de contêineres como Kubernetes.
+Disponível como pacote de código aberto, a versão do Kong oferece funcionalidades essenciais de um API Gateway, incluindo plugins da comunidade.
 
-## Modelos de Licenciamento do Kong Gateway
+É uma solução robusta para quem precisa de um gerenciamento básico de APIs com um conjunto de recursos amplamente utilizados, sem custos adicionais.
 
-### Versão Enterprise
+#### Vantagens
 
-Inclui funcionalidades avançadas como suporte prioritário, ferramentas de análise de desempenho, integração com sistemas empresariais e suporte para ambientes de alta disponibilidade, sendo ideal para grandes empresas com requisitos complexos e de missão crítica.
+- **Custo Zero:** A versão Open Source é totalmente gratuita, tornando-a uma excelente opção para pequenas empresas, startups e ambientes de teste.
 
-Possui plugins que estão disponíveis apenas para esta versão.
+- **Funcionalidades Essenciais:** Oferece recursos fundamentais de um API Gateway, como roteamento de tráfego, balanceamento de carga, autenticação e autorização, entre outros.
+
+- **Plugins Comunitários:** Acesso a uma grande variedade de plugins desenvolvidos pela comunidade, que podem ser usados para estender as funcionalidades do Kong.
+
+- **Gerenciamento Flexível:** Pode ser gerenciado através da Admin API do Kong, do Kong Manager Open Source ou utilizando configurações declarativas (YAML), oferecendo flexibilidade na administração.
+
+- **Documentação e Suporte da Comunidade:** A comunidade ativa oferece suporte e contribuições constantes, além de uma documentação completa e constantemente atualizada.
+
+- **Escalabilidade:** Embora não ofereça todos os recursos avançados da versão Enterprise, o Kong Open Source ainda é escalável e pode ser utilizado em diversos cenários, desde pequenas implementações até ambientes de maior porte.
+
+#### Desvantagens
+
+- **Falta de Controle Granular (RBAC):** A versão Open Source não inclui recursos de controle de acesso baseado em função (RBAC), o que significa que você terá que contar com controle de acesso externo, como firewalls, proxies ou autenticação básica, para gerenciar quem pode acessar a Admin API ou o Kong Manager.
+
+- **Suporte Limitado:** Enquanto a versão Enterprise conta com suporte oficial e serviços de SLA, a versão Open Source depende do suporte da comunidade, o que pode ser um desafio em ambientes críticos.
+
+- **Funcionalidades Avançadas Restritas:** Recursos como suporte a múltiplos ambientes, gerenciamento de consumidores, plugins de segurança avançados e algumas integrações, como por exemplo vaults, estão disponíveis apenas na versão Enterprise.
+
+- **Falta de Garantias de Alta Disponibilidade e Failover:** A versão Open Source não oferece garantias de alta disponibilidade ou failover automático, recursos essenciais em ambientes de produção críticos.
+
+### Enterprise
+
+API Gateway com funcionalidade adicional. Apesar de ser uma versão corporativa, pode ser utilizado em versão Free, sem o uso de licença.
+
+#### RBAC
+
+Uma das funcionalidades adicionais do Kong Enterprise é o controle de acesso baseado em função (RBAC - Role-Based Access Control), essencial para gerenciar permissões de forma granular, assegurando que diferentes usuários e sistemas tenham apenas os acessos necessários.
+
+- **Usuários e Grupos:** Cada usuário pode ser associado a funções ou grupos com permissões específicas.
+- **Funções (Roles):** Definem os conjuntos de permissões que determinam o que os usuários podem acessar ou modificar.
+- **Permissões:** Controles específicos atribuídos às funções, como leitura, escrita ou execução em recursos do Kong, incluindo serviços, rotas, plugins, etc.
+- **Tokens:** Geração de tokens de acesso para autenticar e autorizar solicitações de APIs administrativas.
 
 ### Kong Konnect
 
-Kong Konnect é uma plataforma completa para gerenciamento do ciclo de vida de APIs, com monitoramento em tempo real, segurança avançada e um painel unificado para administração centralizada. Projetado para empresas que precisam de alta escalabilidade e disponibilidade.
+Plataforma completa para o ciclo de vida de APIs, com monitoramento em tempo real e painel centralizado.
 
-### Open source
+## Ambientes Compatíveis
 
-Ideal para pequenas empresas ou uso em ambientes de teste, oferecendo funcionalidades básicas para iniciar o gerenciamento de APIs.
+Nuvens públicas, privadas, híbridas e on-premise
 
-Possui plugins similares ao enterprise desenvolvidos pela comunidade e há a disponinilidade de personalização de plugins.
+Integração nativa com Kubernetes para maior controle de tráfego e suporte a arquiteturas modernas.
