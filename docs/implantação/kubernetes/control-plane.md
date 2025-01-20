@@ -74,6 +74,6 @@ Ideal para arquiteturas distribuídas e de alta disponibilidade.
 
 - Ambientes Multi-Cloud: Onde Data Planes estão localizados em diferentes regiões geográficas ou provedores de nuvem.
 
-- Segurança e Conformidade: Configurações centralizadas facilitam a aplicação de políticas de segurança e a conformidade com regulamentações como GDPR ou HIPAA.
+- Segurança e Conformidade: Configurações centralizadas facilitam a aplicação de políticas de segurança e a conformidade com regulamentações como, LGPD, GDPR ou HIPAA.
 
 - Alta Disponibilidade: Ambientes que requerem failover automático e continuidade do tráfego de API.
