@@ -8,6 +8,6 @@ Para fazer uso de um dos dashboards pré-configurados basta realizar o download 
 
 Importe o arquivo json de configuração na seção de dashboards:
 
-Exemplo de configuração do plugin CORS para uma rota previamente criada:
+Exemplo de configuração:
 
 ![Grafana](/kong-gateway/assets/gifs/kong/integrations/grafana.gif)
