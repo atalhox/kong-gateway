@@ -2,13 +2,13 @@ site_name: Kong Gateway
 site_url: https://atalhox.github.io/kong-gateway/
 plugins:
   - mermaid2
+  - search
 
 dev_addr: "127.0.0.1:8090"
 
 markdown_extensions:
   - attr_list
   - md_in_html
-  - search
 
 theme:
   name: material
