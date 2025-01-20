@@ -73,5 +73,3 @@ Nesta configuração, há uma clara separação entre o **Control Plane (CP)** e
 | **Casos de Uso**        | Desenvolvimento e testes locais                | Produção de larga escala                 |
 | **Consumo de Recursos** | Baixo                                          | Moderado a alto                          |
 | **Segurança de Comunicação** | Não necessário                              | Necessita mTLS entre CP e DP             |
-
-### Microgateway
